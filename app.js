@@ -1,30 +1,19 @@
 const express = require('express');
-const app = express();
-const mongoose = require('mongoose');
+const app = express()
 const bodyParser = require('body-parser')
-require('dotenv/config')
+const cors = require('cors')
 
+
+//import routes
+const buyingRoutes = require('./routes/buyingRoutes');
+
+//middlewares
 app.use(bodyParser.json())
+app.use(cors())
+app.use('/buying', buyingRoutes)
 
 
-//import Routes
-const postsRoute = require('./routes/posts');
-
-app.use('/posts', postsRoute)
-
-//ROUTES
-app.get('/', (req,res) => {
-    res.send('we are on home')
+PORT = process.env.PORT || 5005
+app.listen(PORT, () => {
+    console.log(`API is listening at port ${PORT}`)
 })
-
-app.get('/posts', (req,res) => {
-    res.send('we are on posts')
-})
-
-//Connect to DB
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true } , () => {
-    console.log('connected to DB!')
-})
-
-//How do we start listening to the server
-app.listen(3000)
