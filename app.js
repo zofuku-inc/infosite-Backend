@@ -19,6 +19,6 @@ app.use('/users', userRoutes)
 
 
 const PORT = process.env.PORT || 5005
-app.listen(PORT, () => {
-    console.log(`API is listening at port ${PORT}`)
+app.listen(process.env.PORT || 5005, () => {
+    console.log(`API is listening ...`)
 })
