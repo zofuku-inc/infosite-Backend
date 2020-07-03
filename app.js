@@ -18,7 +18,4 @@ app.use('/sellingHouse', housingRoutes)
 app.use('/users', userRoutes)
 
 
-const PORT = process.env.PORT || 5005
-app.listen(process.env.PORT || 5005, () => {
-    console.log(`API is listening ...`)
-})
+module.exports = app;
