@@ -6,6 +6,12 @@ function getAllBuyingRequests(){
             
 }
 
+function getSpecificBuyingRequest(requestId){
+    return db("node_buy_request")
+            .where({id: requestId})
+            .then(requests => requests[0])
+}
+
 function addBuyingRequest(request){
     return db("node_buy_request")
             .returning("id")
@@ -23,11 +29,13 @@ function editBuyingRequest(requestId, change){
     return db("node_buy_request")
             .where({id: requestId})
             .update(change)
+            .then(request => request)
 
 }
 
 module.exports = {
     getAllBuyingRequests,
+    getSpecificBuyingRequest,
     addBuyingRequest,
     delBuyingRequest,
     editBuyingRequest
