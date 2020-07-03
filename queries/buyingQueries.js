@@ -33,6 +33,7 @@ function editBuyingRequest(requestId, change){
 
 }
 
+
 module.exports = {
     getAllBuyingRequests,
     getSpecificBuyingRequest,
