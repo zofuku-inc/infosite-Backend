@@ -7,9 +7,9 @@ function getAllBuyingRequests(){
 }
 
 function getSpecificBuyingRequest(requestId){
-    return db("node_buy_request")
-            .where({id: requestId})
-            .then(requests => requests[0])
+    return db("node_buy_request as n")
+            .where('n.id',requestId)
+            .join("users as u", "u.id", "n.buyer_id")
 }
 
 function addBuyingRequest(request){

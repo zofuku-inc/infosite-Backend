@@ -29,7 +29,7 @@ router.post('/', async (req,res) => {
 })
 
 //GET buying request by id
-router.get('/:requestId', async (req,res) => {
+router.get('/:requestId/get', async (req,res) => {
     const requestId = req.params.requestId
     try {
         const request = await getSpecificBuyingRequest(requestId)
@@ -40,7 +40,7 @@ router.get('/:requestId', async (req,res) => {
 })
 
 //DEL buying request by id
-router.delete('/:requestId', async (req,res) => {
+router.delete('/:requestId/delete', async (req,res) => {
     const requestId = req.params.requestId
     try {
         await delBuyingRequest(requestId)
@@ -52,7 +52,7 @@ router.delete('/:requestId', async (req,res) => {
 
 
 //UPDATE buying request by id
-router.patch('/:requestId', async (req,res) => {
+router.patch('/:requestId/edit', async (req,res) => {
     const requestId = req.params.requestId
     const change = req.body
     try {
