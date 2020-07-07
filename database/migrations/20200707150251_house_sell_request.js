@@ -2,13 +2,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable('house_sell_request', table => {
             table.increments()
-            table.integer('owner_id')
-                 .notNullable()
-                 .unsigned()
-                 .references('id')
-                 .inTable('users')
-                 .onDelete('CASCADE')
-                 .onUpdate('CASCADE')
             table.string('building_name')
             table.decimal('building_latitude').notNullable()
             table.decimal('building_longitude').notNullable()

@@ -7,7 +7,6 @@ exports.seed = function(knex) {
       return knex('house_sell_request').insert([
         {
           id: 1, 
-          owner_id: 1,
           building_name: "ABC",
           building_latitude: 35.028309,
           building_longitude: 135.753082,
@@ -23,7 +22,6 @@ exports.seed = function(knex) {
         },
         {
           id: 2, 
-          owner_id: 1,
           building_name: "BCD",
           building_latitude: 35.6804,
           building_longitude: 139.7690,
@@ -39,7 +37,6 @@ exports.seed = function(knex) {
         },
         {
           id: 3, 
-          owner_id: 2,
           building_name: "EFG",
           building_latitude: 35.12222,
           building_longitude: 137.4444,

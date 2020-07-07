@@ -7,7 +7,6 @@ exports.seed = function(knex) {
       return knex('node_buy_request').insert([
         {
           id: 1, 
-          buyer_id: 3,
           budget: 800,
           expected_receive: '09/20/2020',
           have_data_center: false,
@@ -16,7 +15,6 @@ exports.seed = function(knex) {
         },
         {
           id: 2, 
-          buyer_id: 3,
           budget: 900,
           expected_receive: '09/21/2020',
           have_data_center: true,
@@ -25,7 +23,6 @@ exports.seed = function(knex) {
         },
         {
           id: 3, 
-          buyer_id: 3,
           budget: 400,
           expected_receive: '09/25/2020',
           have_data_center: true,
