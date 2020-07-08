@@ -2,14 +2,14 @@ const db = require('../database/dbConfig')
 
 function getAllBuyingRequests(){
     return db("node_buy_request as n")
-            .join("users as u", "u.id", "n.buyer_id")
+            .join("user as u", "u.id", "n.buyer_id")
             
 }
 
 function getSpecificBuyingRequest(requestId){
     return db("node_buy_request as n")
             .where('n.id',requestId)
-            .join("users as u", "u.id", "n.buyer_id")
+            .join("user as u", "u.id", "n.buyer_id")
 }
 
 function addBuyingRequest(request){

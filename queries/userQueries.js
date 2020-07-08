@@ -1,17 +1,17 @@
 const db = require('../database/dbConfig')
 
 function getAllUsers(){
-    return db("users")
+    return db("user")
 }
 
 function getUserById(userId){
-    return db("users")
+    return db("user")
             .where({id: userId})
             .then(users => users[0])
 }
 
 function addUser(user){
-    return db("users")
+    return db("user")
             .returning("id")
             .insert(user)
             .then(ids => ({id: ids[0]}))
@@ -19,13 +19,13 @@ function addUser(user){
 }
 
 function updateUser(userId, change){
-    return db("users")
+    return db("user")
             .where({id: userId})
             .update(change)
 }
 
 function deleteUser(userId){
-    return db("users")
+    return db("user")
             .where({id: userId})
             .del()
 }
