@@ -14,9 +14,9 @@ const api_secret = process.env.API_SECRET
 
 
 cloudinary.config({
-    cloud_name: `zofuku`,
-    api_key: `488346754213774`,
-    api_secret: `IgTZFggMI7yLkyU4wYCV-UYbN6k`
+    cloud_name: cloud_name,
+    api_key: api_key,
+    api_secret: api_secret
 })
 
 
