@@ -38,12 +38,13 @@ router.post('/forHouse/:houseId',  (req, res) => {
                 addImage(imageToPost)
                 .then(response => {
                     const imageId = response.id
+                    console.log('imageId', imageId)
                     addHouseImage({
                         image_id: imageId,
                         house_id: houseId
                     })
                     .then(newres => {
-                        res.status(200).json(newres)
+                        res.status(200).json(results)
                     })
                     .catch(err => {
                         res.status(500).json(err.message)
