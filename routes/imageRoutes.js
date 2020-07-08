@@ -45,6 +45,9 @@ router.post('/forHouse/:houseId',  (req, res) => {
                     .then(newres => {
                         res.status(200).json(newres)
                     })
+                    .catch(err => {
+                        res.status(500).json(err.message)
+                    })
                 })
                 .catch(err => {
                     res.status(500).json(err.message)
