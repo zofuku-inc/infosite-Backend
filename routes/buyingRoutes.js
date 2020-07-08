@@ -2,6 +2,8 @@ const router = require('express').Router()
 const { 
         getAllBuyingRequests, 
         addBuyingRequest, 
+        getRequestByUserId,
+        addUserBuyNode,
         delBuyingRequest,
         getSpecificBuyingRequest, 
         editBuyingRequest
@@ -18,14 +20,26 @@ router.get('/', async (req,res) => {
 })
 
 //POST a buying request
-router.post('/', async (req,res) => {
+router.post('/fromBuyer/:buyer_id', async (req,res) => {
     const requestToPost = req.body
-    try {
-        const id = await addBuyingRequest(requestToPost)
-        res.status(200).json(id)
-    } catch (err){
-        res.status(500).json(err.message)
-    }
+    const buyer_id = req.params.buyer_id
+    addBuyingRequest(requestToPost)
+        .then(response => {
+            const request_id = response.id
+            addUserBuyNode({
+                user_id: buyer_id,
+                node_request_id: request_id
+                })
+                .then(newres => {
+                    res.status(200).json(newres)
+                })
+                .catch(err => {
+                    res.status(200).json(err)
+                })
+        })
+        .catch(err => {
+            res.status(200).json(err)
+        })
 })
 
 //GET buying request by id
@@ -38,6 +52,19 @@ router.get('/:requestId/get', async (req,res) => {
         res.status(500).json(err.message)
     }
 })
+
+
+//GET request by user id
+router.get('/fromBuyer/:buyer_id', async (req,res) => {
+    const buyer_id = req.params.buyer_id
+    try {
+        const requests = await getRequestByUserId(buyer_id)
+        res.status(200).json(requests)
+    } catch (err){
+        res.status(500).json(err)
+    }
+})
+
 
 //DEL buying request by id
 router.delete('/:requestId/delete', async (req,res) => {

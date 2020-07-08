@@ -19,7 +19,7 @@ app.use(cors())
 app.use('/buying', buyingRoutes)
 app.use('/sellingHouse', housingRoutes)
 app.use('/users', userRoutes)
-app.use('/house/images', imageRoutes)
+app.use('/images', imageRoutes)
 
 
 module.exports = app;

@@ -2,6 +2,8 @@ const router = require('express').Router()
 const {
         getAllHousingRequests,
         addHousingRequest,
+        getHouseByOwnerId,
+        addUserHouse,
         getHousingRequestById,
         updateHousingRequest,
         deleteHousingRequest
@@ -19,13 +21,37 @@ router.get('/', async (req,res) => {
 })
 
 //POST a house selling request
-router.post('/', async (req,res) => {
+router.post('/owner/:owner_id', (req,res) => {
     const requestToPost = req.body
+    const owner_id = req.params.owner_id
+    addHousingRequest(requestToPost)
+        .then(response => {
+            console.log('res1', response)
+            const house_id = response.id
+            addUserHouse({
+                user_id: owner_id,
+                house_id: house_id
+            })
+                .then(newres => {
+                    res.status(200).json({house_id: house_id})
+                })
+                .catch(err => {
+                    res.status(500).json(err.message)
+                })
+        })
+        .catch(err => {
+            res.status(500).json(err.message)
+        })
+})
+
+//GET a house by owner id
+router.get('/owner/:owner_id', async (req, res) => {
+    const owner_id = req.params.owner_id
     try {
-        const id = await addHousingRequest(requestToPost)
-        res.status(200).json(id)
+        const houses = await getHouseByOwnerId(owner_id)
+        res.status(200).json(houses)
     } catch (err){
-        res.status(500).json(err.message)
+        res.status(500).json(err)
     }
 })
 
