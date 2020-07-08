@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const cloudinary = require('cloudinary');
+require('dotenv').config();
 const {
     addImage,
     getImages,
