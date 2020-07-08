@@ -72,17 +72,6 @@ router.get('/', async (req,res) => {
     }
 })
 
-//POST house_image
-// router.post('/house_image', async (req,res) => {
-//     const houseImageIds = req.body
-//     try {
-//         const id = await addHouseImage(houseImageIds)
-//         res.status(200).json(id)
-//     } catch (err){
-//         res.status(500).json(err)
-//     }
-// } )
-
 
 //GET images by house_id
 router.get('/forHouse/:house_id', async (req,res) => {
