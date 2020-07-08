@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const cloudinary = require('cloudinary');
 const {
-    addImageUrl
+    addImage
 } = require('../queries/imageQueries')
 
 const cloud_name = `${process.env.CLOUD_NAME}`
@@ -18,15 +18,13 @@ cloudinary.config({
 
 //POST image url
 router.post('/',  (req, res) => {
-    console.log('req.body', req.body)
-    console.log('req.files', req.files)
     const values = Object.values(req.files)
-    console.log('values', values)
     const promises = values.map(image => cloudinary.uploader.upload(image.path))
     
     Promise
         .all(promises)
         .then(results => {
+            console.log('results', results)
             for (let i=0; i<results.length; i++){
                 addImageUrl(results[i])
                 .then(id => {
