@@ -15,9 +15,9 @@ const api_secret = process.env.API_SECRET
 console.log('cloud_name', cloud_name)
 
 cloudinary.config({
-    cloud_name: cloud_name,
-    api_key: api_key,
-    api_secret: api_secret
+    cloud_name: `${cloud_name}`,
+    api_key: `${api_key}`,
+    api_secret: `${api_secret}`
 })
 
 
