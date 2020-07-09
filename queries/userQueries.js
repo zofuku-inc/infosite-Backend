@@ -1,4 +1,6 @@
 const db = require('../database/dbConfig')
+const jwt = require('jsonwebtoken')
+const secrets = require('../secret')
 
 function getAllUsers(){
     return db("user")
@@ -18,6 +20,11 @@ function addUser(user){
 
 }
 
+function findBy(filter){
+    return db("user")
+            .where(filter)
+}
+
 function updateUser(userId, change){
     return db("user")
             .where({id: userId})
@@ -30,10 +37,24 @@ function deleteUser(userId){
             .del()
 }
 
+function generateToken(user){
+    const payload = {
+        subject: user.id
+    }
+    const secret = secrets.jwtSecret;
+    const options = {
+        expiresIn: '8h'
+    }
+
+    return jwt.sign(payload, secret, options)
+}
+
 module.exports = {
     getAllUsers,
     getUserById,
     addUser,
+    findBy,
     updateUser,
-    deleteUser
+    deleteUser,
+    generateToken
 }

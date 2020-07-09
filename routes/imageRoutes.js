@@ -25,7 +25,7 @@ cloudinary.config({
 router.post('/forHouse/:houseId',  (req, res) => {
     const values = Object.values(req.files)
     const promises = values.map(image => cloudinary.uploader.upload(image.path))
-    const houseId = req.params.houseId
+    const houseId = parseInt(req.params.houseId)
     Promise
         .all(promises)
         .then(results => {

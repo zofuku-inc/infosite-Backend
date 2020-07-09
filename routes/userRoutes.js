@@ -1,9 +1,12 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
 const {
         getAllUsers,
         getUserById,
         addUser,
+        findBy,
         updateUser,
+        generateToken,
         deleteUser
       } = require('../queries/userQueries');
 
@@ -18,15 +21,42 @@ router.get('/', async (req,res) => {
     }
 })
 
-//POST a user
+//POST a user - sign up
 router.post('/', async (req,res) => {
     const userToPost = req.body
+    if (userToPost.password){
+        const pwhashed = bcrypt.hashSync(userToPost.password, 10)
+        userToPost.password = pwhashed
+    }
     try {
         const id = await addUser(userToPost)
         res.status(200).json(id)
     } catch (err){
         res.status(500).json(err.message)
     }
+})
+
+//POST a user - sign in
+router.post('/signin', (req,res) => {
+    let {email, password} = req.body;
+    findBy({email})
+        .first()
+        .then(user => {
+            if (user && bcrypt.compareSync(password, user.password)){
+                const token = generateToken(user)
+                res.status(200).json({
+                    message: `Welcome ${user.first_name}`,
+                    id: user.id,
+                    token
+                })
+            }
+            else {
+                res.status(401).json({message: 'Invalid Credentials'})
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err)
+        })
 })
 
 //GET a user by id
