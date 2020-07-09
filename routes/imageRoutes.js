@@ -12,6 +12,7 @@ const cloud_name = process.env.CLOUD_NAME
 const api_key = process.env.API_KEY
 const api_secret = process.env.API_SECRET
 
+console.log('cloud_name', cloud_name)
 
 cloudinary.config({
     cloud_name: cloud_name,
