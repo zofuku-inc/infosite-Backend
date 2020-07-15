@@ -1,20 +1,12 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-const {
-        getAllUsers,
-        getUserById,
-        addUser,
-        findBy,
-        updateUser,
-        generateToken,
-        deleteUser
-      } = require('../queries/userQueries');
+const queries = require('../queries/userQueries');
 
 
 //GET all users
 router.get('/', async (req,res) => {
     try {
-        const users = await getAllUsers()
+        const users = await queries.users.getAll()
         res.status(200).json(users)
     } catch (err){
         res.status(500).json(err.message)
@@ -29,7 +21,7 @@ router.post('/', async (req,res) => {
         userToPost.password = pwhashed
     }
     try {
-        const id = await addUser(userToPost)
+        const id = await queries.users.create(userToPost)
         res.status(200).json(id)
     } catch (err){
         res.status(500).json(err.message)

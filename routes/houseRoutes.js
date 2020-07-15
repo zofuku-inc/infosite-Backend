@@ -1,19 +1,11 @@
 const router = require('express').Router()
-const {
-        getAllHousingRequests,
-        addHousingRequest,
-        getHouseByOwnerId,
-        addUserHouse,
-        getHousingRequestById,
-        updateHousingRequest,
-        deleteHousingRequest
-      } = require('../queries/houseQueries')
+const queries = require('../queries/houseQueries');
 
 
 //GET all house selling requests
 router.get('/', async (req,res) => {
     try {
-        const requests = await getAllHousingRequests()
+        const requests = await queries.housingRequests.getAll()
         res.status(200).json(requests)
     } catch (err){
         res.status(500).json(err.message)
@@ -24,14 +16,18 @@ router.get('/', async (req,res) => {
 router.post('/owner/:owner_id', (req,res) => {
     const requestToPost = req.body
     const owner_id = req.params.owner_id
-    addHousingRequest(requestToPost)
+    queries
+        .housingRequests
+        .create(requestToPost)
         .then(response => {
             console.log('res1', response)
             const house_id = response.id
-            addUserHouse({
-                user_id: owner_id,
-                house_id: house_id
-            })
+            queries
+            .housingRequests
+            .createWithUser({
+                                user_id: owner_id,
+                                house_id: house_id
+                            })
                 .then(newres => {
                     res.status(200).json({house_id: house_id})
                 })
@@ -48,7 +44,7 @@ router.post('/owner/:owner_id', (req,res) => {
 router.get('/owner/:owner_id', async (req, res) => {
     const owner_id = req.params.owner_id
     try {
-        const houses = await getHouseByOwnerId(owner_id)
+        const houses = await queries.housingRequests.getByOwnerId(owner_id)
         res.status(200).json(houses)
     } catch (err){
         res.status(500).json(err)
@@ -59,7 +55,7 @@ router.get('/owner/:owner_id', async (req, res) => {
 router.get('/:requestId/get', async (req,res) => {
     const requestId = req.params.requestId
     try {
-        const request = await getHousingRequestById(requestId)
+        const request = await queries.housingRequests.getById(requestId)
         res.status(200).json(request)
     } catch (err){
         res.status(500).json(err.message)
@@ -71,7 +67,7 @@ router.patch('/:requestId/edit', async (req,res) => {
     const requestId = req.params.requestId
     const change = req.body
     try {
-        await updateHousingRequest(requestId, change)
+        await queries.housingRequests.update(requestId, change)
         res.status(200).json({message: 'updated 1 house selling request'})
     } catch (err){
         res.status(500).json(err.message)
@@ -82,7 +78,7 @@ router.patch('/:requestId/edit', async (req,res) => {
 router.delete('/:requestId/delete', async (req,res) => {
     const requestId = req.params.requestId
     try {
-        await deleteHousingRequest(requestId)
+        await queries.housingRequests.delete(requestId)
         res.status(200).json({message: 'deleted 1 house selling request'})
     } catch (err){
         res.status(500).json(err.message)
