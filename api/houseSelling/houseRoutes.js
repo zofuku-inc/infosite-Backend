@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const queries = require('../queries/houseQueries');
+const queries = require('./houseQueries');
 
 
 //GET all house selling requests

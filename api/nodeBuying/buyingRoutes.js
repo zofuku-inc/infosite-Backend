@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const queries = require('../queries/buyingQueries');
+const queries = require('./buyingQueries');
 
 
 //GET all buying requests

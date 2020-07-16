@@ -1,6 +1,6 @@
-const db = require('../database/dbConfig')
+const db = require('../../database/dbConfig')
 const jwt = require('jsonwebtoken')
-const secrets = require('../secret')
+const secrets = require('../../secret')
 
 module.exports = {
     users: {

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const cloudinary = require('cloudinary');
 require('dotenv').config();
-const queries = require('../queries/imageQueries')
+const queries = require('./imageQueries')
 
 const cloud_name = process.env.CLOUD_NAME
 const api_key = process.env.API_KEY

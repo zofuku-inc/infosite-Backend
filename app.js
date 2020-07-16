@@ -7,10 +7,10 @@ require('dotenv').config()
 
 
 //import routes
-const buyingRoutes = require('./routes/buyingRoutes');
-const housingRoutes = require('./routes/houseRoutes');
-const userRoutes = require('./routes/userRoutes');
-const imageRoutes = require('./routes/imageRoutes');
+const buyingRoutes = require('./api/nodeBuying/buyingRoutes');
+const housingRoutes = require('./api/houseSelling/houseRoutes');
+const userRoutes = require('./api/users/userRoutes');
+const imageRoutes = require('./api/images/imageRoutes');
 
 //middlewares
 app.use(bodyParser.json())

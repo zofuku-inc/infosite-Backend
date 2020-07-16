@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-const queries = require('../queries/userQueries');
+const queries = require('./userQueries');
 
 
 //GET all users
