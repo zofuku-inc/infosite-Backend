@@ -20,7 +20,7 @@ exports.up = function(knex) {
             table.float('expected_monthly_price').notNullable()
             table.string('building_type')
             table.string('material')
-            table.float('calculted_monthly_price')
+            table.float('calculated_monthly_price')
             table.float('final_price')
             table.float('ROI')
         })

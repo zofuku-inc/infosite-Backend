@@ -25,7 +25,7 @@ exports.seed = function(knex) {
           expected_monthly_price: 2000,
           building_type: "House",
           material: "wood",
-          calculted_monthly_price: 1500,
+          calculated_monthly_price: 1500,
           final_price: 1800,
           ROI: 14
         },
@@ -49,7 +49,7 @@ exports.seed = function(knex) {
           expected_monthly_price: 4000,
           building_type: "House",
           material: "steel",
-          calculted_monthly_price: 3000,
+          calculated_monthly_price: 3000,
           final_price: 3500,
           ROI: 16
         },
@@ -73,7 +73,7 @@ exports.seed = function(knex) {
           expected_monthly_price: 2200,
           building_type: "Apartment",
           material: "wood",
-          calculted_monthly_price: 1500,
+          calculated_monthly_price: 1500,
           final_price: 1900,
           ROI: 14
         },
@@ -97,7 +97,7 @@ exports.seed = function(knex) {
           expected_monthly_price: 5000,
           building_type: "House",
           material: "steel",
-          calculted_monthly_price: 1500,
+          calculated_monthly_price: 1500,
           final_price: 3000,
           ROI: 15
         },
@@ -121,7 +121,7 @@ exports.seed = function(knex) {
           expected_monthly_price: 2500,
           building_type: "",
           material: "",
-          calculted_monthly_price: 1500,
+          calculated_monthly_price: 1500,
           final_price: 1800,
           ROI: 18
         },

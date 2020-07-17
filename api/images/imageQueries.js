@@ -5,7 +5,7 @@ module.exports = {
         getAll: function(){
             return db("image")
         },
-        getbyHouseId: function(houseId){
+        getByHouseId: function(houseId){
             return db("house_image as hi")
                     .where({house_id: houseId})
                     .join("image as i", "i.id", "hi.image_id")
