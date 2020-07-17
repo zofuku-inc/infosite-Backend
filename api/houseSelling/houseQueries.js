@@ -4,6 +4,10 @@ module.exports = {
     housingRequests: {
         getAll: function(){
             return db("house_sell_request as h")
+                    .join("house_image as hi", "hi.house_id", "h.id")
+                    .join("image as i", "i.id", "hi.image_id")
+                    .select("h.*", "i.image_url")
+
         },
         getById: function(requestId){
             return db("house_sell_request as h")

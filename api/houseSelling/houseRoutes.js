@@ -3,7 +3,7 @@ const queries = require('./houseQueries');
 
 
 //GET all house selling requests
-router.get('/', async (req,res) => {
+router.get('/houses', async (req,res) => {
     try {
         const requests = await queries.housingRequests.getAll()
         res.status(200).json(requests)

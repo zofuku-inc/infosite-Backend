@@ -1,24 +1,26 @@
 
 exports.up = function(knex) {
-    return knex.schema.createTable('house_image', tbl => {
+    return knex.schema.createTable('user_buy_node', tbl => {
         tbl.increments()
-        tbl.integer('house_id')
+        tbl.integer('user_id')
            .notNullable()
            .unsigned()
            .references('id')
-           .inTable('house_sell_request')
+           .inTable('user')
            .onDelete('CASCADE')
            .onUpdate('CASCADE')
-        tbl.integer('image_id')
+        tbl.integer('node_request_id')
            .notNullable()
            .unsigned()
            .references('id')
-           .inTable('image')
+           .inTable('node_buy_request')
            .onDelete('CASCADE')
            .onUpdate('CASCADE')
+        
+  
     })
   };
   
-exports.down = function(knex) {
-    return knex.schema.dropTableIfExists('house_image')
+  exports.down = function(knex) {
+    return knex.schema.dropTableIfExists('user_buy_node')
   };
