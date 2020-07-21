@@ -51,6 +51,17 @@ router.get('/owner/:owner_id', async (req, res) => {
     }
 })
 
+//GET a house by house id
+router.get('/getHouse/:house_id', async (req,res) => {
+    const house_id = req.params.house_id
+    try {
+        const house = await queries.housingRequests.getById(house_id)
+        res.status(200).json(house)
+    } catch (err){
+        res.status(500).json(err)
+    }
+})
+
 //GET a house selling request by id
 router.get('/:requestId/get', async (req,res) => {
     const requestId = req.params.requestId
