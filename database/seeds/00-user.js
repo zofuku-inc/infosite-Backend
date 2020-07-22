@@ -36,7 +36,8 @@ exports.seed = function(knex) {
           password: bcrypt.hashSync('5678', 10),
           phone: "324322322334234",
           latitude: 35.8324234,
-          longitude: 138.73587234
+          longitude: 138.73587234,
+          admin: false
         },
         
       ]);

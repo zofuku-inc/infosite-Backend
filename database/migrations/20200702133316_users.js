@@ -9,7 +9,7 @@ exports.up = function(knex) {
             table.string('phone').notNullable()
             table.decimal('latitude')
             table.decimal('longitude')
-            table.boolean('admin')
+            table.boolean('admin').notNullable()
         })
 };
 
