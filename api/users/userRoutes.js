@@ -39,6 +39,7 @@ router.post('/signin', (req,res) => {
                 res.status(200).json({
                     message: `Welcome ${user.first_name}`,
                     id: user.id,
+                    admin: user.admin,
                     token
                 })
             }
