@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const queries = require('./userQueries');
+const restricted = require('../../middlewares/restricted-middleware')
 
 
 //GET all users
-router.get('/', async (req,res) => {
+router.get('/', restricted, async (req,res) => {
     try {
         const users = await queries.users.getAll()
         res.status(200).json(users)
@@ -35,12 +36,12 @@ router.post('/signin', (req,res) => {
         .first()
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)){
-                const token = queries.generateToken(user)
+                // const token = queries.generateToken(user)
+                req.session.user = user;
                 res.status(200).json({
                     message: `Welcome ${user.first_name}`,
                     id: user.id,
-                    admin: user.admin,
-                    token
+                    admin: user.admin
                 })
             }
             else {
@@ -78,7 +79,7 @@ router.patch('/:userId/edit', async (req,res) => {
 
 
 //DELETE a user
-router.delete('/:userId/delete', async (req,res) => {
+router.delete('/:userId/delete', restricted, async (req,res) => {
     const userId = req.params.userId
     try {
         await queries.users.delete(userId)
