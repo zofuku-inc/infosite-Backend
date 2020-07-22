@@ -31,11 +31,11 @@ router.post('/', async (req,res) => {
 //POST a user - sign in
 router.post('/signin', (req,res) => {
     let {email, password} = req.body;
-    findBy({email})
+    queries.users.findBy({email})
         .first()
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)){
-                const token = generateToken(user)
+                const token = queries.generateToken(user)
                 res.status(200).json({
                     message: `Welcome ${user.first_name}`,
                     id: user.id,
@@ -48,7 +48,7 @@ router.post('/signin', (req,res) => {
             }
         })
         .catch(err => {
-            res.status(500).json(err)
+            res.status(500).json(err.message)
         })
 })
 
@@ -56,7 +56,7 @@ router.post('/signin', (req,res) => {
 router.get('/:userId/get', async (req,res) => {
     const userId = req.params.userId
     try {
-        const user = await getUserById(userId)
+        const user = await queries.users.getById(userId)
         res.status(200).json(user)
     } catch (err){
         res.status(500).json(err.message)
@@ -69,7 +69,7 @@ router.patch('/:userId/edit', async (req,res) => {
     const userId = req.params.userId
     const change = req.body
     try {
-        await updateUser(userId, change)
+        await queries.users.update(userId, change)
         res.status(200).json({message: 'updated 1 user'})
     } catch (err){
         res.status(500).json(err.message)
@@ -81,7 +81,7 @@ router.patch('/:userId/edit', async (req,res) => {
 router.delete('/:userId/delete', async (req,res) => {
     const userId = req.params.userId
     try {
-        await deleteUser(userId)
+        await queries.users.delete(userId)
         res.status(200).json({message: 'deleted 1 user'})
     } catch (err){
         res.status(500).json(err.message)
