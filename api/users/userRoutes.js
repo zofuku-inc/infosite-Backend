@@ -38,10 +38,12 @@ router.post('/signin', (req,res) => {
             if (user && bcrypt.compareSync(password, user.password)){
                 // const token = queries.generateToken(user)
                 req.session.user = user;
+                console.log('req.sessionID', req.sessionID)
                 res.status(200).json({
                     message: `Welcome ${user.first_name}`,
                     id: user.id,
-                    admin: user.admin
+                    admin: user.admin,
+                    sessionID: req.sessionID
                 })
             }
             else {
