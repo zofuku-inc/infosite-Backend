@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const queries = require('./userQueries');
-const restricted = require('../../middlewares/restricted-middleware')
+const isAdmin = require('../../middlewares/restricted-middleware')
 
 
 //GET all users
@@ -79,7 +79,7 @@ router.patch('/:userId/edit', async (req,res) => {
 
 
 //DELETE a user
-router.delete('/:userId/delete', restricted, async (req,res) => {
+router.delete('/:userId/delete', isAdmin, async (req,res) => {
     const userId = req.params.userId
     try {
         await queries.users.delete(userId)

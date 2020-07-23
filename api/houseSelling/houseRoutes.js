@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const queries = require('./houseQueries');
-const restricted = require('../../middlewares/restricted-middleware')
+const isAdmin = require('../../middlewares/restricted-middleware')
 
 
 //GET all house selling requests
@@ -42,7 +42,7 @@ router.post('/owner/:owner_id', (req,res) => {
 })
 
 //GET a house by owner id
-router.get('/owner/:owner_id', restricted, async (req, res) => {
+router.get('/owner/:owner_id', async (req, res) => {
     const owner_id = req.params.owner_id
     try {
         const houses = await queries.housingRequests.getByOwnerId(owner_id)
@@ -75,7 +75,7 @@ router.get('/:requestId/get', async (req,res) => {
 })
 
 //UPDATE a house selling request
-router.patch('/:requestId/edit', restricted, async (req,res) => {
+router.patch('/:requestId/edit', isAdmin, async (req,res) => {
     const requestId = req.params.requestId
     const change = req.body
     try {
@@ -87,7 +87,7 @@ router.patch('/:requestId/edit', restricted, async (req,res) => {
 })
 
 //DELETE a house selling request
-router.delete('/:requestId/delete', restricted, async (req,res) => {
+router.delete('/:requestId/delete', isAdmin, async (req,res) => {
     const requestId = req.params.requestId
     try {
         await queries.housingRequests.delete(requestId)
