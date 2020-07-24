@@ -9,15 +9,15 @@ require('dotenv').config()
 const sessionConfig = {
     name: 'monkey',
     secret: 'keep it secret, keep it safe!',
+    expires: new Date(Date.now() + (30 * 86400 * 1000)),
     rolling: true,
     cookie: {
-        maxAge: 1000 * 60 * 60,
+        maxAge: 1000 * 60 * 60 ,
         secure: false, //should be set to true in production
         httpOnly: true,
     },
     resave: false,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
-
 }
 
 

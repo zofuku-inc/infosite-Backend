@@ -43,7 +43,8 @@ router.post('/signin', (req,res) => {
                     message: `Welcome ${user.first_name}`,
                     id: user.id,
                     admin: user.admin,
-                    sessionID: req.sessionID
+                    sessionID: req.sessionID,
+                    cookie: req.session.cookie
                 })
             }
             else {

@@ -1,4 +1,5 @@
 module.exports = (req,res,next) => {
+    console.log('req.session', req.session,'req.session.user', req.session.user )
     if (req.session && req.session.user){
         if (req.session.user.admin){
             next();
