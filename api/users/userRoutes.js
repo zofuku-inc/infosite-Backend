@@ -36,7 +36,6 @@ router.post('/signin', (req,res) => {
         .first()
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)){
-                // const token = queries.generateToken(user)
                 req.session.user = user;
                 console.log('req.sessionID', req.sessionID)
                 res.status(200).json({

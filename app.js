@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const formData = require('express-form-data');
 const session = require('express-session');
+
 const cors = require('cors')
 require('dotenv').config()
 
@@ -28,10 +30,11 @@ const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
 //middlewares
+app.use(cookieParser());
 app.use(bodyParser.json())
 app.use(formData.parse())
 app.use(session(sessionConfig))
-app.use(cors())
+app.use(cors(({ credentials: true, origin: `http://localhost:3000` | `https://infoapp.htran2.vercel.app/`})))
 app.use('/buying', buyingRoutes)
 app.use('/sellingHouse', housingRoutes)
 app.use('/users', userRoutes)
