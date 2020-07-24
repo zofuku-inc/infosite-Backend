@@ -39,6 +39,17 @@ exports.seed = function(knex) {
           longitude: 138.73587234,
           admin: false
         },
+        {
+          id: 4, 
+          first_name: 'Zofuku',
+          last_name: 'Inc',
+          email: 'admin@zofuku.com',
+          password: bcrypt.hashSync('z0fuku2020', 10),
+          phone: "7742903808",
+          latitude: 35.8324234,
+          longitude: 138.73587234,
+          admin: true
+        },
         
       ]);
     });
