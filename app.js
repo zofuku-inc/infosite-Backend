@@ -34,7 +34,10 @@ app.use(cookieParser());
 app.use(bodyParser.json())
 app.use(formData.parse())
 app.use(session(sessionConfig))
-app.use(cors(({ credentials: true, origin: `http://localhost:3000` || `https://infoapp.htran2.vercel.app/`})))
+app.use(cors(({ 
+    credentials: true, 
+    origin: `https://infoapp.htran2.vercel.app`,
+})))
 app.use('/buying', buyingRoutes)
 app.use('/sellingHouse', housingRoutes)
 app.use('/users', userRoutes)
