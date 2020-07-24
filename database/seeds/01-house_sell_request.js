@@ -27,7 +27,9 @@ exports.seed = function(knex) {
           material: "wood",
           calculated_monthly_price: 1500,
           final_price: 1800,
-          ROI: 14
+          ROI: 14,
+          income: 0,
+          cost: 0
         },
         {
           id: 2, 
@@ -51,7 +53,9 @@ exports.seed = function(knex) {
           material: "steel",
           calculated_monthly_price: 3000,
           final_price: 3500,
-          ROI: 16
+          ROI: 16,
+          income: 0,
+          cost: 0
         },
         {
           id: 3, 
@@ -75,7 +79,9 @@ exports.seed = function(knex) {
           material: "wood",
           calculated_monthly_price: 1500,
           final_price: 1900,
-          ROI: 14
+          ROI: 14,
+          income: 0,
+          cost: 0
         },
         {
           id: 4, 
@@ -99,7 +105,9 @@ exports.seed = function(knex) {
           material: "steel",
           calculated_monthly_price: 1500,
           final_price: 3000,
-          ROI: 15
+          ROI: 15,
+          income: 0,
+          cost: 0
         },
         {
           id: 5, 
@@ -123,7 +131,9 @@ exports.seed = function(knex) {
           material: "",
           calculated_monthly_price: 1500,
           final_price: 1800,
-          ROI: 18
+          ROI: 18,
+          income: 0,
+          cost: 0
         },
       ]);
     });

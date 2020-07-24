@@ -25,36 +25,73 @@ router.post('/forHouse/:houseId',  (req, res) => {
     Promise
         .all(promises)
         .then(results => {
-            console.log('results', results)
-            for (let i=0; i<results.length; i++){
+            if (results.length === 0){
                 const imageToPost = {
-                    image_url:  results[i].secure_url,
-                    width: results[i].width,
-                    height: results[i].height,
-                    created_at: results[i].created_at
+                    image_url: "https://res.cloudinary.com/zofuku/image/upload/v1595627524/house_default_zg7uwu.jpg",
+                    width: 400,
+                    height: 300,
+                    created_at: ""
                 }
                 queries
-                .images
-                .create(imageToPost)
-                .then(response => {
-                    const imageId = response.id
-                    console.log('imageId', imageId)
-                    queries
                     .images
-                    .createWithHouse({
-                                        image_id: imageId,
-                                        house_id: houseId
-                                    })
-                    .then(newres => {
-                        res.status(200).json(results)
+                    .create(imageToPost)
+                    .then(response => {
+                        console.log('response in uploading image', response)
+                        const imageId = response.id
+                        queries
+                            .images
+                            .createWithHouse({
+                                                image_id: imageId,
+                                                house_id: houseId
+                                            })
+                            .then(newres => {
+                                console.log('posted image and house successfully')
+                                res.status(200).json(results)
+                            })
+                            .catch(err => {
+                                console.log(err.message)
+                                res.status(500).json(err.message)
+                            })
                     })
                     .catch(err => {
+                        console.log(err.message)
                         res.status(500).json(err.message)
                     })
-                })
-                .catch(err => {
-                    res.status(500).json(err.message)
-                })
+            }
+            else {
+                for (let i=0; i<results.length; i++){
+                    const imageToPost = {
+                        image_url:  results[i].secure_url,
+                        width: results[i].width,
+                        height: results[i].height,
+                        created_at: results[i].created_at
+                    }
+                    queries
+                        .images
+                        .create(imageToPost)
+                        .then(response => {
+                            console.log('response in uploading image', response)
+                            const imageId = response.id
+                            console.log('imageId', imageId)
+                            queries
+                                .images
+                                .createWithHouse({
+                                                    image_id: imageId,
+                                                    house_id: houseId
+                                                })
+                                .then(newres => {
+                                    console.log('posted image and house successfully')
+                                    res.status(200).json(results)
+                                })
+                                .catch(err => {
+                                    console.log(err.message)
+                                    res.status(500).json(err.message)
+                                })
+                        })
+                        .catch(err => {
+                            res.status(500).json(err.message)
+                        })
+                }
             }
         })
         .catch(err => {

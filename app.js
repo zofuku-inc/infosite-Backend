@@ -4,9 +4,20 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const formData = require('express-form-data');
 const session = require('express-session');
-
 const cors = require('cors')
 require('dotenv').config()
+
+var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app']
+var corsOptions = {
+    credentials: true,
+    origin: function (origin, callback) {
+        if (originList.indexOf(origin) !== -1) {
+        callback(null, true)
+        } else {
+        callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
 
 const sessionConfig = {
     name: 'monkey',
@@ -31,17 +42,14 @@ const imageRoutes = require('./api/images/imageRoutes');
 
 //middlewares
 app.use(cookieParser());
-app.use(bodyParser.json())
-app.use(formData.parse())
-app.use(session(sessionConfig))
-app.use(cors(({ 
-    credentials: true, 
-    origin: `https://infoapp.htran2.vercel.app`,
-})))
-app.use('/buying', buyingRoutes)
-app.use('/sellingHouse', housingRoutes)
-app.use('/users', userRoutes)
-app.use('/images', imageRoutes)
+app.use(bodyParser.json());
+app.use(formData.parse());
+app.use(session(sessionConfig));
+app.use(cors(corsOptions));
+app.use('/buying', buyingRoutes);
+app.use('/sellingHouse', housingRoutes);
+app.use('/users', userRoutes);
+app.use('/images', imageRoutes);
 
 
 module.exports = app;

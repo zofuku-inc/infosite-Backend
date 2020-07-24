@@ -23,6 +23,8 @@ exports.up = function(knex) {
             table.float('calculated_monthly_price')
             table.float('final_price')
             table.float('ROI')
+            table.float('income')
+            table.float('cost')
         })
 };
 
