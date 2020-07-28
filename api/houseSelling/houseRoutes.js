@@ -86,6 +86,18 @@ router.patch('/:requestId/edit', isAdmin, async (req,res) => {
     }
 })
 
+//UPDATE number of nodes of a house
+router.patch('/:requestId/edit/user', async (req, res) => {
+    const requestId = req.params.requestId
+    const change = req.body
+    try {
+        await queries.housingRequests.update(requestId, change)
+        res.status(200).json({message: 'updated 1 house selling request'})
+    } catch (err){
+        res.status(500).json(err.message)
+    }
+})
+
 //DELETE a house selling request
 router.delete('/:requestId/delete', isAdmin, async (req,res) => {
     const requestId = req.params.requestId
