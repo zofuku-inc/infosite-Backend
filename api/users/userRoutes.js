@@ -55,6 +55,22 @@ router.post('/signin', (req,res) => {
         })
 })
 
+//LOGOUT
+router.get('/logout', (req,res) => {
+    if (req.session){
+        req.session.destroy(err => {
+            if (err){
+                res.json({message: 'you can check out any time but you can never leave'})
+            } else {
+                res.status(200).json({message: 'bye, thanks for coming here'})
+            }
+        })
+    }
+    else {
+        res.status(200).json({message: 'you were never here to begin with' })
+    }
+})
+
 //GET a user by id
 router.get('/:userId/get', async (req,res) => {
     const userId = req.params.userId
