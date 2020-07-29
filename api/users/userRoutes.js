@@ -97,7 +97,7 @@ router.get('/:userId/get', async (req,res) => {
 
 
 //UPDATE a user
-router.patch('/:userId/edit', async (req,res) => {
+router.patch('/:userId/edit', isAdmin, async (req,res) => {
     const userId = req.params.userId
     const change = req.body
     try {

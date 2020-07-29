@@ -17,6 +17,8 @@ module.exports = {
             return db("user_sell_house as uh")
                     .where({user_id: ownerId})
                     .join("house_sell_request as hr", "hr.id", "uh.house_id")
+                    .join("house_image as hi", "hi.house_id", "uh.house_id")
+                    .join("image as i","i.id", "hi.image_id")
                     .join("user as u", "u.id", "uh.user_id")
         },
         create: function(request){
