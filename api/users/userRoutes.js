@@ -56,7 +56,7 @@ router.post('/signin', (req,res) => {
 })
 
 //LOGOUT
-router.get('/logout', (req,res) => {
+router.get('/signout', (req,res) => {
     if (req.session){
         req.session.destroy(err => {
             if (err){
