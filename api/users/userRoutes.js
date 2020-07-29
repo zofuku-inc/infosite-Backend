@@ -21,12 +21,26 @@ router.post('/', async (req,res) => {
         const pwhashed = bcrypt.hashSync(userToPost.password, 10)
         userToPost.password = pwhashed
     }
-    try {
-        const id = await queries.users.create(userToPost)
-        res.status(200).json(id)
-    } catch (err){
+    queries
+        .users
+        .create(userToPost)
+        .then(res => {
+            console.log('res in post req', res)
+            if (res){
+                queries
+                    .users
+                    .getById(res.id)
+                    .then(newres => {
+                        res.status(500).json(newres)
+                    })
+                    .catch(err => {
+                        res.status(500).json(err.message)
+                    })
+            }
+        })
+        .catch(err => {
         res.status(500).json(err.message)
-    }
+        })
 })
 
 //POST a user - sign in
