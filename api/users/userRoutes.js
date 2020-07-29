@@ -24,14 +24,13 @@ router.post('/', async (req,res) => {
     queries
         .users
         .create(userToPost)
-        .then(res => {
-            console.log('res in post req', res)
-            if (res){
+        .then(response => {
+            if (response){
                 queries
                     .users
-                    .getById(res.id)
+                    .getById(response.id)
                     .then(newres => {
-                        res.status(500).json(newres)
+                        res.status(200).json(newres)
                     })
                     .catch(err => {
                         res.status(500).json(err.message)
