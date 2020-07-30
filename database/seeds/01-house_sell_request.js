@@ -29,7 +29,8 @@ exports.seed = function(knex) {
           final_price: 1800,
           ROI: 14,
           income: 0,
-          cost: 0
+          cost: 0,
+          sold: false
         },
         {
           id: 2, 
@@ -55,7 +56,8 @@ exports.seed = function(knex) {
           final_price: 3500,
           ROI: 16,
           income: 0,
-          cost: 0
+          cost: 0,
+          sold: false
         },
         {
           id: 3, 
@@ -81,7 +83,8 @@ exports.seed = function(knex) {
           final_price: 1900,
           ROI: 14,
           income: 0,
-          cost: 0
+          cost: 0,
+          sold: false
         },
         {
           id: 4, 
@@ -107,7 +110,8 @@ exports.seed = function(knex) {
           final_price: 3000,
           ROI: 15,
           income: 0,
-          cost: 0
+          cost: 0,
+          sold: false
         },
         {
           id: 5, 
@@ -133,7 +137,8 @@ exports.seed = function(knex) {
           final_price: 1800,
           ROI: 18,
           income: 0,
-          cost: 0
+          cost: 0,
+          sold: false
         },
       ]);
     });

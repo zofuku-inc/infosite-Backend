@@ -25,6 +25,7 @@ exports.up = function(knex) {
             table.float('ROI')
             table.float('income')
             table.float('cost')
+            table.boolean('sold')
         })
 };
 
