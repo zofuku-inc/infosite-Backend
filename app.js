@@ -26,7 +26,7 @@ const sessionConfig = {
     rolling: true,
     cookie: {
         maxAge: 1000 * 60 * 60 ,
-        secure: false, //should be set to true in production
+        secure: true, //should be set to true in production
         httpOnly: true,
     },
     resave: false,
@@ -45,7 +45,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(formData.parse());
 app.use(session(sessionConfig));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use('/buying', buyingRoutes);
 app.use('/sellingHouse', housingRoutes);
 app.use('/users', userRoutes);
