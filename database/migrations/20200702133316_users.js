@@ -10,6 +10,8 @@ exports.up = function(knex) {
             table.decimal('latitude')
             table.decimal('longitude')
             table.boolean('admin').notNullable()
+            table.string('resetPasswordToken')
+            table.string('resetPasswordExpires')
         })
 };
 

@@ -79,22 +79,31 @@ router.post('/signin', (req,res) => {
 //FORGOT PASSWORD
 router.post('/forgotpassword', (req,res) => {
     if (req.body.email === ''){
-        res.status(400).send('email required')
+        res.status(400).json('email required')
     }
     queries
         .users
         .findBy({email: req.body.email})
         .first()
         .then(user => {
-            if (user === null){
-                res.status(403).send('email not in db')
+            if (user === undefined){
+                res.status(403).json('email not in db')
             } else {
                 console.log('user', user)
                 const token = crypto.randomBytes(20).toString('hex')
-                // user.update({
-                //     resetPasswordToken: token,
-                //     resetPasswordExpires: Date.now()*3600000
-                // });
+                queries
+                    .users
+                    .update(user.id, {
+                    resetPasswordToken: token,
+                    // resetPasswordExpires: Date.now()*3600000
+                    })
+                    .then(res => {
+                        console.log('updated?',res.data)
+                    })
+                    .catch(err => {
+                        console.log(err.message)
+                    })
+                    ;
 
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
@@ -127,7 +136,67 @@ router.post('/forgotpassword', (req,res) => {
                 })
             }
         })
+        .catch(err => {
+            res.status(500).json(err.message)
+        })
 })
+
+//RESET PASSWORD
+router.get('/password/reset/:token', (req,res, next) => {
+    const resetPasswordToken = req.params.token
+    console.log('resetPasswordToken', resetPasswordToken)
+    queries
+        .users
+        .findBy({
+            resetPasswordToken: req.query.resetPasswordToken,
+            // resetPasswordExpires: {
+            //     $gt: Date.now()
+            // }
+        })
+        .then(user => {
+            if (user === null){
+                console.log('password reset link is invalid or has expired')
+                res.json('password reset link is invalid or has expired')
+            } else {
+                res.status(200).send({
+                    email: user.email,
+                    message: 'password reset link a-ok'
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err.message)
+        })
+})
+
+//UPDATE PASSWORD VIA EMAIL
+router.patch('/updatePasswordViaEmail', (req,res, next) => {
+    queries
+        .users
+        .findBy({
+            email: req.body.email
+        })
+        .then(user => {
+            if (user !== null){
+                console.log('user exists in db');
+                const pwhashed = bcrypt.hashSync(userToPost.password, 10)
+                queries
+                      .users
+                      .update({
+                          password: pwhashed,
+                          resetPasswordToken: null,
+                          resetPasswordExpires: null
+                      })
+                      .then(() => {
+                          console.log('password updated')
+                          res.status(200).send({message: 'password updated'})
+                      })
+            } else {
+                console.log('no user exists in db to update');
+                res.status(404).json('no user exists in db to update')
+            }
+        });
+});
 
 //LOGOUT
 router.get('/signout', (req,res) => {
