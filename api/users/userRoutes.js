@@ -1,8 +1,10 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const queries = require('./userQueries');
-const isAdmin = require('../../middlewares/restricted-middleware')
-
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const isAdmin = require('../../middlewares/restricted-middleware');
+require('dotenv').config()
 
 //GET all users
 router.get('/', isAdmin, async (req,res) => {
@@ -70,6 +72,60 @@ router.post('/signin', (req,res) => {
         })
         .catch(err => {
             res.status(500).json(err.message)
+        })
+})
+
+
+//FORGOT PASSWORD
+router.post('/forgotpassword', (req,res) => {
+    if (req.body.email === ''){
+        res.status(400).send('email required')
+    }
+    queries
+        .users
+        .findBy({email: req.body.email})
+        .first()
+        .then(user => {
+            if (user === null){
+                res.status(403).send('email not in db')
+            } else {
+                console.log('user', user)
+                const token = crypto.randomBytes(20).toString('hex')
+                // user.update({
+                //     resetPasswordToken: token,
+                //     resetPasswordExpires: Date.now()*3600000
+                // });
+
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: `${process.env.EMAIL_ADDRESS}`,
+                        pass: `${process.env.EMAIL_PASSWORD}`
+                    }
+                });
+
+                console.log('user.email', user.email)
+
+                const mailOptions = {
+                    from: 'htran2@babson.edu',
+                    to: `${user.email}`,
+                    subject: 'Link to Reset Password',
+                    text: 
+                        'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
+                        + 'Please click on the following link, or paste this into your browser to complete the process within an hour of receiving it:\n\n'
+                        + `http://localhost:3000/reset/${token}\n\n`
+                        + 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                };
+
+                transporter.sendMail(mailOptions, (err, response) => {
+                    if (err){
+                        console.error('there was an error:  ', err)
+                    } else {
+                        console.log('here is the res: ', response)
+                        res.status(200).json('recovery email sent')
+                    }
+                })
+            }
         })
 })
 
