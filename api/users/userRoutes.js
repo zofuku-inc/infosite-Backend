@@ -148,12 +148,14 @@ router.get('/password/reset/:token', (req,res, next) => {
     queries
         .users
         .findBy({
-            resetPasswordToken: req.query.resetPasswordToken,
+            resetPasswordToken: resetPasswordToken,
             // resetPasswordExpires: {
             //     $gt: Date.now()
             // }
         })
+        .first()
         .then(user => {
+            console.log('user', user)
             if (user === null){
                 console.log('password reset link is invalid or has expired')
                 res.json('password reset link is invalid or has expired')
@@ -176,13 +178,14 @@ router.patch('/updatePasswordViaEmail', (req,res, next) => {
         .findBy({
             email: req.body.email
         })
+        .first()
         .then(user => {
             if (user !== null){
                 console.log('user exists in db');
-                const pwhashed = bcrypt.hashSync(userToPost.password, 10)
+                const pwhashed = bcrypt.hashSync(req.body.password, 10)
                 queries
                       .users
-                      .update({
+                      .update(user.id, {
                           password: pwhashed,
                           resetPasswordToken: null,
                           resetPasswordExpires: null
