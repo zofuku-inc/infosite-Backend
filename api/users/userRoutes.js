@@ -23,6 +23,7 @@ router.post('/', async (req,res) => {
         const pwhashed = bcrypt.hashSync(userToPost.password, 10)
         userToPost.password = pwhashed
     }
+    console.log('userToPost', userToPost)
     queries
         .users
         .create(userToPost)
