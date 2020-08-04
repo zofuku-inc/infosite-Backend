@@ -21,6 +21,10 @@ var corsOptions = {
 
 const isDevMode = process.env.NODE_ENV === 'development';
 
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
+console.log('isDevMode', isDevMode, '!isDevMode', !isDevMode)
+
 // 1st change.
 if (!isDevMode) {
   app.set('trust proxy', 1);
@@ -50,6 +54,7 @@ const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
 //middlewares
+app.set('trust proxy', 1);
 app.enable('trust proxy');
 app.use(cookieParser());
 app.use(bodyParser.json());
