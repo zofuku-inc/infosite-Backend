@@ -1,3 +1,4 @@
+var sslRedirect = require('heroku-ssl-redirect');
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
@@ -56,6 +57,7 @@ const imageRoutes = require('./api/images/imageRoutes');
 //middlewares
 // app.set('trust proxy', 1);
 // app.enable('trust proxy');
+app.use(sslRedirect());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(formData.parse());
