@@ -35,6 +35,7 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 ,
         secure: !isDevMode, //should be set to true in production
         httpOnly: true,
+        proxy : true,
         path: '/'
     },
     resave: false,
@@ -49,6 +50,7 @@ const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
 //middlewares
+app.enable('trust proxy');
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(formData.parse());
