@@ -12,7 +12,7 @@ router.get('/', isAdmin, async (req,res) => {
         const users = await queries.users.getAll()
         res.status(200).json(users)
     } catch (err){
-        res.status(500).json(err.message)
+        res.status(500).json(err)
     }
 })
 
