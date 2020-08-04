@@ -7,7 +7,7 @@ const session = require('express-session');
 const cors = require('cors')
 require('dotenv').config()
 
-var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app']
+var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app', 'https://zofuku-app.herokuapp.com']
 var corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
