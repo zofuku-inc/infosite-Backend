@@ -19,29 +19,29 @@ var corsOptions = {
     }
 }
 
-const isDevMode = process.env.NODE_ENV === 'development';
+// const isDevMode = process.env.NODE_ENV === 'development';
 
-console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+// console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 
-console.log('isDevMode', isDevMode, '!isDevMode', !isDevMode)
+// console.log('isDevMode', isDevMode, '!isDevMode', !isDevMode)
 
-// 1st change.
-if (!isDevMode) {
-  app.set('trust proxy', 1);
-}
+// // 1st change.
+// if (!isDevMode) {
+//   app.set('trust proxy', 1);
+// }
 
 const sessionConfig = {
     name: 'monkey',
     secret: 'keep it secret, keep it safe!',
     expires: new Date(Date.now() + (30 * 86400 * 1000)),
     rolling: true,
-    cookie: {
-        maxAge: 1000 * 60 * 60 ,
-        secure: false, //should be set to true in production
-        httpOnly: true,
-        proxy : true,
-        path: '/'
-    },
+    // cookie: {
+    //     maxAge: 1000 * 60 * 60 ,
+    //     secure: false, //should be set to true in production
+    //     httpOnly: true,
+    //     proxy : true,
+    //     path: '/'
+    // },
     resave: false,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
@@ -54,8 +54,8 @@ const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
 //middlewares
-app.set('trust proxy', 1);
-app.enable('trust proxy');
+// app.set('trust proxy', 1);
+// app.enable('trust proxy');
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(formData.parse());
