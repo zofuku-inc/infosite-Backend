@@ -19,6 +19,13 @@ var corsOptions = {
     }
 }
 
+const isDevMode = process.env.NODE_ENV === 'development';
+
+// 1st change.
+if (!isDevMode) {
+  app.set('trust proxy', 1);
+}
+
 const sessionConfig = {
     name: 'monkey',
     secret: 'keep it secret, keep it safe!',
@@ -26,7 +33,7 @@ const sessionConfig = {
     rolling: true,
     cookie: {
         maxAge: 1000 * 60 * 60 ,
-        secure: true, //should be set to true in production
+        secure: !isDevMode, //should be set to true in production
         httpOnly: true,
         path: '/'
     },
