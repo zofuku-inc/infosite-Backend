@@ -36,13 +36,13 @@ const sessionConfig = {
     secret: 'keep it secret, keep it safe!',
     expires: new Date(Date.now() + (30 * 86400 * 1000)),
     rolling: true,
-    // cookie: {
-    //     maxAge: 1000 * 60 * 60 ,
-    //     secure: false, //should be set to true in production
-    //     httpOnly: true,
-    //     proxy : true,
-    //     path: '/'
-    // },
+    cookie: {
+        maxAge: 1000 * 60 * 60 ,
+        secure: false, //should be set to true in production
+        httpOnly: true,
+        // proxy : true,
+        path: '/'
+    },
     resave: false,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
