@@ -20,11 +20,13 @@ cloudinary.config({
 //POST image url with house_id
 router.post('/forHouse/:houseId',  (req, res) => {
     const values = Object.values(req.files)
+    console.log('values', values)
     const promises = values.map(image => cloudinary.uploader.upload(image.path))
     const houseId = parseInt(req.params.houseId)
     Promise
         .all(promises)
         .then(results => {
+            console.log('results', results)
             if (results.length === 0){
                 const imageToPost = {
                     image_url: "https://res.cloudinary.com/zofuku/image/upload/v1595627524/house_default_zg7uwu.jpg",
