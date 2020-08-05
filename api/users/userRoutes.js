@@ -7,7 +7,7 @@ const isAdmin = require('../../middlewares/restricted-middleware');
 require('dotenv').config()
 
 //GET all users
-router.get('/', isAdmin, async (req,res) => {
+router.get('/', async (req,res) => {
     try {
         const users = await queries.users.getAll()
         res.status(200).json(users)
@@ -231,7 +231,7 @@ router.get('/:userId/get', async (req,res) => {
 
 
 //UPDATE a user
-router.patch('/:userId/edit', isAdmin, async (req,res) => {
+router.patch('/:userId/edit', async (req,res) => {
     const userId = req.params.userId
     const change = req.body
     try {
@@ -244,7 +244,7 @@ router.patch('/:userId/edit', isAdmin, async (req,res) => {
 
 
 //DELETE a user
-router.delete('/:userId/delete', isAdmin, async (req,res) => {
+router.delete('/:userId/delete', async (req,res) => {
     const userId = req.params.userId
     try {
         await queries.users.delete(userId)
