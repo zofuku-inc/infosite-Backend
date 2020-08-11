@@ -17,6 +17,7 @@ exports.up = function(knex) {
             table.float('building_size').notNullable()
             table.string('term_years').notNullable()
             table.integer('nodes_to_install').notNullable()
+            table.integer('total_nodes').notNullable()
             table.float('expected_monthly_price').notNullable()
             table.string('building_type')
             table.string('material')
