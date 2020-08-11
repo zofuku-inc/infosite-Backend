@@ -9,8 +9,8 @@ exports.up = function(knex) {
                  .inTable('house_sell_request')
                  .onDelete('CASCADE')
                  .onUpdate('CASCADE')
-            table.integer('quantity').notNullable()
-            table.date('expected_receive').notNullable()
+            table.integer('quantity')
+            table.date('expected_receive')
            
         })
 };
