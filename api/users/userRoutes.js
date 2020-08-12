@@ -125,11 +125,15 @@ router.post('/forgotpassword', (req,res) => {
                         + '下記のリンクからパスワードのリセットができます。このURLの有効期限は1時間です。\n\n'
                         + `https://zofuku-app.herokuapp.com/reset/${token}\n\n`
                         + 'メールの内容に覚えがない場合は、このメールは無視してください。リセットの手続きをしない限り、パスワードは変更されません。\n'
+                        + '株式会社Zofuku。\n'
+                        + 'hello@zofuku.com \n'
                         + '----\n'
                         + 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
                         + 'Please click on the following link, or paste this into your browser to complete the process within an hour of receiving it:\n\n'
                         + `https://zofuku-app.herokuapp.com/reset/${token}\n\n`
                         + 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                        + 'Zofuku, Inc.\n'
+                        + 'hello@zofuku.com \n'
                 };
 
                 transporter.sendMail(mailOptions, (err, response) => {
