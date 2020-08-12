@@ -119,9 +119,14 @@ router.post('/forgotpassword', (req,res) => {
                 const mailOptions = {
                     from: 'zofuku.test@gmail.com',
                     to: `${user.email}`,
-                    subject: 'Link to Reset Password',
+                    subject: 'パスワードのリセット | Link to Reset Password',
                     text: 
-                        'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
+                        'パスワードのリセット依頼があったアカウントのメールアドレスへ送信しています。\n\n'
+                        + '下記のリンクからパスワードのリセットができます。このURLの有効期限は1時間です。\n\n'
+                        + `https://zofuku-app.herokuapp.com/reset/${token}\n\n`
+                        + 'メールの内容に覚えがない場合は、このメールは無視してください。リセットの手続きをしない限り、パスワードは変更されません。\n'
+                        + '----\n'
+                        + 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
                         + 'Please click on the following link, or paste this into your browser to complete the process within an hour of receiving it:\n\n'
                         + `https://zofuku-app.herokuapp.com/reset/${token}\n\n`
                         + 'If you did not request this, please ignore this email and your password will remain unchanged.\n'

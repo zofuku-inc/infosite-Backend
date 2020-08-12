@@ -20,17 +20,6 @@ var corsOptions = {
     }
 }
 
-// const isDevMode = process.env.NODE_ENV === 'development';
-
-// console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-
-// console.log('isDevMode', isDevMode, '!isDevMode', !isDevMode)
-
-// // 1st change.
-// if (!isDevMode) {
-//   app.set('trust proxy', 1);
-// }
-
 const sessionConfig = {
     name: 'monkey',
     secret: 'keep it secret, keep it safe!',
