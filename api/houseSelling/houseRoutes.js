@@ -99,7 +99,7 @@ router.patch('/:requestId/edit/user', async (req, res) => {
 })
 
 //DELETE a house selling request
-router.delete('/:requestId/delete', isAdmin, async (req,res) => {
+router.delete('/:requestId/delete', async (req,res) => {
     const requestId = req.params.requestId
     try {
         await queries.housingRequests.delete(requestId)
