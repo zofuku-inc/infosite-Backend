@@ -6,6 +6,7 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('house_sell_request').insert([
         {
+          id: 1,
           address_district_number: "Kamiya 3399-4",
           address_city: "Togane",
           address_prefecture: "Chiba",
@@ -33,6 +34,7 @@ exports.seed = function(knex) {
           sold: false
         },
         {
+          id: 2,
           address_district_number: "Southern 151",
           address_city: "Nagareyama",
           address_prefecture: "Chiba",
@@ -60,6 +62,7 @@ exports.seed = function(knex) {
           sold: false
         },
         {
+          id: 3,
           address_district_number: "Togane 128-2",
           address_city: "Togane",
           address_prefecture: "Chiba",
@@ -87,6 +90,7 @@ exports.seed = function(knex) {
           sold: false
         },
         {
+          id: 4,
           address_district_number: "Ebisunishi 2-21-15",
           address_city: "Shibuya Ward",
           address_prefecture: "Tokyo",
@@ -114,6 +118,7 @@ exports.seed = function(knex) {
           sold: false
         },
         { 
+          id: 5,
           address_district_number: "Ikuta-cho 4-chrome, 54-2",
           address_city: "Tajimi",
           address_prefecture: "Gifu",

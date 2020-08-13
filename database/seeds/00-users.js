@@ -7,6 +7,7 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('user').insert([
         { 
+          id: 1,
           first_name: 'Peter',
           last_name: 'Owen',
           email: 'peter@gmail.com',
@@ -17,6 +18,7 @@ exports.seed = function(knex) {
           admin: false
         },
         {
+          id: 2,
           first_name: 'Jessie',
           last_name: 'Smith',
           password: bcrypt.hashSync('1234', 10),
@@ -27,6 +29,7 @@ exports.seed = function(knex) {
           admin: false
         },
         {
+          id: 3,
           first_name: 'Niikura',
           last_name: 'Patan',
           email: 'nii@gmail.com',
@@ -37,6 +40,7 @@ exports.seed = function(knex) {
           admin: false
         },
         {
+          id: 4,
           first_name: 'Zofuku',
           last_name: 'Inc',
           email: 'admin@zofuku.com',
