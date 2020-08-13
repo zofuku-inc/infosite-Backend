@@ -37,7 +37,7 @@ router.post('/owner/:owner_id', (req,res) => {
                 })
         })
         .catch(err => {
-            res.status(500).json(err.message)
+            res.status(500).json(err)
         })
 })
 
