@@ -20,6 +20,11 @@ var corsOptions = {
     }
 }
 
+const config = {
+    origin: 'https://store.spaceincome.jp',
+    credentials: true,
+};
+
 const sessionConfig = {
     name: 'monkey',
     secret: 'keep it secret, keep it safe!',
@@ -46,20 +51,13 @@ const imageRoutes = require('./api/images/imageRoutes');
 //middlewares
 // app.set('trust proxy', 1);
 // app.enable('trust proxy');
-app.use(function(req, res, next) {
-        res.header('Access-Control-Allow-Credentials', true);
-        res.header('Access-Control-Allow-Origin', req.headers.origin);
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-        res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-        next();
-    }
-);
+
 app.use(sslRedirect());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(formData.parse());
 app.use(session(sessionConfig));
-app.use(cors(corsOptions));
+app.use(cors(config));
 app.use('/buying', buyingRoutes);
 app.use('/sellingHouse', housingRoutes);
 app.use('/users', userRoutes);
