@@ -27,6 +27,8 @@ const sessionConfig = {
     expires: new Date(Date.now() + (30 * 86400 * 1000)),
     rolling: true,
     cookie: {
+        domain: "https://store.spaceincome.jp",
+        sameSite: true,
         maxAge: 1000 * 60 * 60 ,
         secure: true, //should be set to true in production
         httpOnly: true,
