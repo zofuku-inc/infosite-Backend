@@ -20,10 +20,6 @@ var corsOptions = {
     }
 }
 
-const config = {
-    origin: 'https://store.spaceincome.jp',
-    credentials: true,
-};
 
 const sessionConfig = {
     name: 'monkey',
@@ -32,7 +28,7 @@ const sessionConfig = {
     rolling: true,
     cookie: {
         maxAge: 1000 * 60 * 60 ,
-        secure: false, //should be set to true in production
+        secure: true, //should be set to true in production
         httpOnly: true,
         // proxy : true,
         path: '/'
@@ -49,7 +45,7 @@ const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
 //middlewares
-// app.set('trust proxy', 1);
+app.set('trust proxy', 1);
 // app.enable('trust proxy');
 
 app.use(sslRedirect());
@@ -57,7 +53,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(formData.parse());
 app.use(session(sessionConfig));
-app.use(cors(config));
+app.use(cors(corsOptions));
 app.use('/buying', buyingRoutes);
 app.use('/sellingHouse', housingRoutes);
 app.use('/users', userRoutes);
