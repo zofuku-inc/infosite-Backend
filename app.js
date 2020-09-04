@@ -51,7 +51,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(formData.parse());
 app.use(session(sessionConfig));
-app.use(cors(corsOptions));
+app.use(cors());
 app.use('/buying', buyingRoutes);
 app.use('/sellingHouse', housingRoutes);
 app.use('/users', userRoutes);
