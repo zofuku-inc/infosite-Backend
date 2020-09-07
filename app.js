@@ -11,6 +11,7 @@ require('dotenv').config()
 var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app', 'https://zofuku-app.herokuapp.com', 'http://store.spaceincome.jp', 'https://store.spaceincome.jp']
 var corsOptions = {
     credentials: true,
+    // origin: "http://localhost:3000"
     origin: function (origin, callback) {
         if (originList.indexOf(origin) !== -1) {
         callback(null, true)
@@ -27,10 +28,8 @@ const sessionConfig = {
     expires: new Date(Date.now() + (30 * 86400 * 1000)),
     rolling: true,
     cookie: {
-        domain: "https://store.spaceincome.jp",
-        sameSite: true,
         maxAge: 1000 * 60 * 60 ,
-        secure: true, //should be set to true in production
+        secure: false, //should be set to true in production
         httpOnly: true,
         // proxy : true,
         path: '/'
