@@ -49,7 +49,7 @@ const housingRoutes = require('./api/houseSelling/houseRoutes');
 const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
-
+app.set('trust proxy', 1);
 app.use(sslRedirect());
 app.use(cookieParser());
 app.use(bodyParser.json());
