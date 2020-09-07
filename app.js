@@ -24,14 +24,13 @@ var corsOptions = {
 const sessionConfig = {
     name: 'monkey',
     secret: 'keep it secret, keep it safe!',
-    expires: new Date(Date.now() + (30 * 86400 * 1000)),
-    // rolling: true,
+    // expires: new Date(Date.now() + (30 * 86400 * 1000)),
     cookie: {
         maxAge: 1000 * 60 * 60*24 ,
         secure: false, //should be set to true in production
-        httpOnly: true,
-        path: '/'
+        // path: '/'
     },
+    httpOnly: true,
     resave: false,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
