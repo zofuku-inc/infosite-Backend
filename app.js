@@ -38,6 +38,11 @@ const sessionConfig = {
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
 
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sessionConfig.cookie.secure = true // serve secure cookies
+  }
+
 
 //import routes
 const buyingRoutes = require('./api/nodeBuying/buyingRoutes');
@@ -45,9 +50,6 @@ const housingRoutes = require('./api/houseSelling/houseRoutes');
 const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
-//middlewares
-app.set('trust proxy', 1);
-// app.enable('trust proxy');
 
 app.use(sslRedirect());
 app.use(cookieParser());
