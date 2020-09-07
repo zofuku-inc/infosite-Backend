@@ -27,8 +27,8 @@ const sessionConfig = {
     expires: new Date(Date.now() + (30 * 86400 * 1000)),
     // rolling: true,
     cookie: {
-        maxAge: 1000 * 60 * 60 ,
-        secure: true, //should be set to true in production
+        maxAge: 1000 * 60 * 60*24 ,
+        secure: false, //should be set to true in production
         httpOnly: true,
         path: '/'
     },
@@ -36,7 +36,7 @@ const sessionConfig = {
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
 
-if (app.get('env') === 'production') {
+if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     sessionConfig.cookie.secure = true // serve secure cookies
   }
