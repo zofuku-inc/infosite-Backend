@@ -27,7 +27,7 @@ const sessionConfig = {
     // expires: new Date(Date.now() + (30 * 86400 * 1000)),
     cookie: {
         maxAge: 1000 * 60 * 60*24 ,
-        secure: false, //should be set to true in production
+        secure: true, //should be set to true in production
         // path: '/'
     },
     httpOnly: true,
