@@ -28,7 +28,7 @@ const sessionConfig = {
     // rolling: true,
     cookie: {
         maxAge: 1000 * 60 * 60 ,
-        secure: false, //should be set to true in production
+        secure: true, //should be set to true in production
         httpOnly: true,
         path: '/'
     },
