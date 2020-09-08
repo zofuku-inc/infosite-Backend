@@ -20,13 +20,23 @@ var corsOptions = {
     }
 }
 
+const TWO_HOURS = 1000*60*60*2
+
+const {
+    NODE_ENV = 'development',
+    SESS_NAME = 'monkey',
+    SESS_SECRET = 'keep it secret, keep it safe!',
+    SESS_LIFETIME = TWO_HOURS
+} = process.env
+
+const IN_PRO = NODE_ENV === 'production'
 
 const sessionConfig = {
-    name: 'monkey',
-    secret: 'keep it secret, keep it safe!',
+    name: SESS_NAME,
+    secret: SESS_SECRET,
     cookie: {
-        maxAge: 1000 * 60 * 60*24 ,
-        secure: true, // only set cookies over https. Server will not send back a cookie over http.
+        maxAge: SESS_LIFETIME ,
+        secure: IN_PRO, // only set cookies over https. Server will not send back a cookie over http.
     },
     httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
     resave: false,
