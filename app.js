@@ -28,7 +28,7 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60*24 ,
         secure: false, //should be set to true in production
     },
-    httpOnly: true,
+    httpOnly: false,
     resave: false,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
