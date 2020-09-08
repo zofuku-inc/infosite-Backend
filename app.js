@@ -8,7 +8,7 @@ const session = require('express-session');
 const cors = require('cors')
 require('dotenv').config()
 
-var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app', 'https://zofuku-app.herokuapp.com', 'http://store.spaceincome.jp', 'https://store.spaceincome.jp']
+var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app', 'https://zofuku-app.herokuapp.com', 'http://store.spaceincome.jp', 'https://store.spaceincome.jp', 'https://infoapp.htran2.vercel.app']
 var corsOptions = {
     credentials: true,
     origin: function (origin, callback) {
