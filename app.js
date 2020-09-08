@@ -26,9 +26,9 @@ const sessionConfig = {
     secret: 'keep it secret, keep it safe!',
     cookie: {
         maxAge: 1000 * 60 * 60*24 ,
-        secure: false, //should be set to true in production
+        secure: true, // only set cookies over https. Server will not send back a cookie over http.
     },
-    httpOnly: false,
+    httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
     resave: false,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
