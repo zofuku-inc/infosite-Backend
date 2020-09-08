@@ -24,23 +24,20 @@ var corsOptions = {
 const sessionConfig = {
     name: 'monkey',
     secret: 'keep it secret, keep it safe!',
-    // expires: new Date(Date.now() + (30 * 86400 * 1000)),
     cookie: {
         maxAge: 1000 * 60 * 60*24 ,
-        secure: true, //should be set to true in production
-        // path: '/'
+        secure: false, //should be set to true in production
     },
     httpOnly: true,
     resave: false,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
 
-if (process.env.NODE_ENV === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
-    sessionConfig.cookie.secure = true // serve secure cookies
-  }
+// if (process.env.NODE_ENV === 'production') {
+//     app.set('trust proxy', 1) // trust first proxy
+//     sessionConfig.cookie.secure = true // serve secure cookies
+//   }
 
-console.log('secure', sessionConfig.cookie.secure)
 
 
 //import routes
