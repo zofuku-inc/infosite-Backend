@@ -12,7 +12,7 @@ router.get('/', async (req,res) => {
         const users = await queries.users.getAll()
         res.status(200).json(users)
     } catch (err){
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 })
 
@@ -72,7 +72,7 @@ router.post('/signin', (req,res) => {
             }
         })
         .catch(err => {
-            res.status(500).json(err)
+            res.status(500).json(err.message)
         })
 })
 

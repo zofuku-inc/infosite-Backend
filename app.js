@@ -40,6 +40,7 @@ const sessionConfig = {
     },
     httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
     resave: false,
+    proxy: true,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
 }
 
@@ -56,10 +57,7 @@ const housingRoutes = require('./api/houseSelling/houseRoutes');
 const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
-app.set('trust proxy', function (ip) {
-    if (ip === '127.0.0.1' || ip === '123.123.123.123') return true // trusted IPs
-    else return false
-  })
+
 app.use(sslRedirect());
 app.use(cookieParser());
 app.use(bodyParser.json());
