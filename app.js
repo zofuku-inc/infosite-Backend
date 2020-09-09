@@ -21,7 +21,7 @@ var corsOptions = {
     //     callback(new Error('Not allowed by CORS'))
     //     }
     // }
-    origin: 'https://store.spaceincome.jp'
+    origin: 'https://zofuku-app.herokuapp.com'
 }
 
 const TWO_HOURS = 1000*60*60*2
