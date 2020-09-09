@@ -32,7 +32,7 @@ const sessionConfig = {
     secret: 'keep it secret, keep it safe!',
     cookie: {
         maxAge: 1000*60*60*2 ,
-        secure: false, // only set cookies over https. Server will not send back a cookie over http.
+        secure: app.get('env') === 'production', // only set cookies over https. Server will not send back a cookie over http.
         domain: 'store.spaceincome.jp'
     },
     httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
@@ -48,10 +48,10 @@ const sessionConfig = {
     })
 }
 
-// if (process.env.NODE_ENV === 'production') {
-//     app.set('trust proxy', 1) // trust first proxy
-//     sessionConfig.cookie.secure = true // serve secure cookies
-//   }
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sessionConfig.cookie.secure = true // serve secure cookies
+  }
 
 
 
