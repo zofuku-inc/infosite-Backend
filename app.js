@@ -5,8 +5,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const formData = require('express-form-data');
 const session = require('express-session');
-const cors = require('cors')
+const cors = require('cors');
+const KnexSessionStore = require('connect-session-knex')(session);
 require('dotenv').config()
+
+const db = require('./database/dbConfig');
 
 var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app', 'https://zofuku-app.herokuapp.com', 'http://store.spaceincome.jp', 'https://store.spaceincome.jp', 'https://infoapp.htran2.vercel.app']
 var corsOptions = {
@@ -22,26 +25,27 @@ var corsOptions = {
 
 const TWO_HOURS = 1000*60*60*2
 
-const {
-    NODE_ENV = 'development',
-    SESS_NAME = 'monkey',
-    SESS_SECRET = 'keep it secret, keep it safe!',
-    SESS_LIFETIME = TWO_HOURS
-} = process.env
 
-const IN_PRO = NODE_ENV === 'production'
 
 const sessionConfig = {
-    name: SESS_NAME,
-    secret: SESS_SECRET,
+    name: 'monkey',
+    secret: 'keep it secret, keep it safe!',
     cookie: {
-        maxAge: SESS_LIFETIME ,
-        secure: IN_PRO, // only set cookies over https. Server will not send back a cookie over http.
+        maxAge: 1000*60*60*2 ,
+        secure: app.get('env') === 'production', // only set cookies over https. Server will not send back a cookie over http.
+        domain: 'store.spaceincome.jp'
     },
     httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
     resave: false,
     proxy: true,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
+    store: new KnexSessionStore({
+        tablename: 'session',
+        sidfieldname: 'sid',
+        knex: db,
+        createtable: true,
+        clearInterval: 1000 * 60 * 60  //removes only expired
+    })
 }
 
 // if (process.env.NODE_ENV === 'production') {
