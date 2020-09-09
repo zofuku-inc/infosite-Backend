@@ -24,19 +24,16 @@ var corsOptions = {
     
 }
 
-const TWO_HOURS = 1000*60*60*2
-
-
 
 const sessionConfig = {
-    name: 'monkey',
-    secret: 'keep it secret, keep it safe!',
+    name: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_NAME,
     cookie: {
         maxAge: 1000*60*60*2 ,
-        secure: false, // only set cookies over https. Server will not send back a cookie over http.
-        domain: '.store.spaceincome.jp'
+        secure: app.get('env') === 'production',
+        sameSite: 'none',
+        httpOnly: true
     },
-    httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
     resave: false,
     proxy: true,
     saveUninitialized: false, // GDPR laws against setting cookies automatically
@@ -48,11 +45,6 @@ const sessionConfig = {
         clearInterval: 1000 * 60 * 60  //removes only expired
     })
 }
-
-if (app.get('env') === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
-    sessionConfig.cookie.secure = true // serve secure cookies
-  }
 
 
 
