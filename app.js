@@ -32,8 +32,8 @@ const sessionConfig = {
     secret: 'keep it secret, keep it safe!',
     cookie: {
         maxAge: 1000*60*60*2 ,
-        secure: app.get('env') === 'production', // only set cookies over https. Server will not send back a cookie over http.
-        domain: 'https://store.spaceincome.jp'
+        secure: false, // only set cookies over https. Server will not send back a cookie over http.
+        domain: 'store.spaceincome.jp'
     },
     httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
     resave: false,
