@@ -14,13 +14,14 @@ const db = require('./database/dbConfig');
 var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app', 'https://zofuku-app.herokuapp.com', 'http://store.spaceincome.jp', 'https://store.spaceincome.jp', 'https://infoapp.htran2.vercel.app']
 var corsOptions = {
     credentials: true,
-    origin: function (origin, callback) {
-        if (originList.indexOf(origin) !== -1) {
-        callback(null, true)
-        } else {
-        callback(new Error('Not allowed by CORS'))
-        }
-    }
+    // origin: function (origin, callback) {
+    //     if (originList.indexOf(origin) !== -1) {
+    //     callback(null, true)
+    //     } else {
+    //     callback(new Error('Not allowed by CORS'))
+    //     }
+    // }
+    origin: 'https://store.spaceincome.jp'
 }
 
 const TWO_HOURS = 1000*60*60*2
@@ -61,7 +62,7 @@ const housingRoutes = require('./api/houseSelling/houseRoutes');
 const userRoutes = require('./api/users/userRoutes');
 const imageRoutes = require('./api/images/imageRoutes');
 
-
+app.set('trust proxy', 1)
 app.use(sslRedirect());
 app.use(cookieParser());
 app.use(bodyParser.json());
