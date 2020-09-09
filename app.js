@@ -11,17 +11,17 @@ require('dotenv').config()
 
 const db = require('./database/dbConfig');
 
-// var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app', 'https://zofuku-app.herokuapp.com', 'http://store.spaceincome.jp', 'https://store.spaceincome.jp', 'https://infoapp.htran2.vercel.app']
+var originList = ['http://localhost:3000', 'https://infoapp.htran2.vercel.app', 'https://zofuku-app.herokuapp.com', 'http://store.spaceincome.jp', 'https://store.spaceincome.jp', 'https://infoapp.htran2.vercel.app']
 var corsOptions = {
     credentials: true,
-    // origin: function (origin, callback) {
-    //     if (originList.indexOf(origin) !== -1) {
-    //     callback(null, true)
-    //     } else {
-    //     callback(new Error('Not allowed by CORS'))
-    //     }
-    // }
-    origin: 'https://zofuku-app.herokuapp.com'
+    origin: function (origin, callback) {
+        if (originList.indexOf(origin) !== -1) {
+        callback(null, true)
+        } else {
+        callback(new Error('Not allowed by CORS'))
+        }
+    }
+    
 }
 
 const TWO_HOURS = 1000*60*60*2
@@ -34,7 +34,7 @@ const sessionConfig = {
     cookie: {
         maxAge: 1000*60*60*2 ,
         secure: false, // only set cookies over https. Server will not send back a cookie over http.
-        // domain: '.store.spaceincome.jp'
+        domain: '.store.spaceincome.jp'
     },
     httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
     resave: false,
