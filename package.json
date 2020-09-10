@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,23 @@
   },
   "homepage": "https://github.com/zofuku-inc/infosite-Backend#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.22.0",
+    "connect-session-knex": "^1.7.3",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.20",
-    "nodemon": "^2.0.4"
+    "express-form-data": "^2.0.13",
+    "express-session": "^1.17.1",
+    "heroku-ssl-redirect": "0.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.1",
+    "nodemailer": "^6.4.11",
+    "nodemon": "^2.0.4",
+    "pg": "^8.2.1",
+    "postgres": "^1.0.2",
+    "sqlite3": "^5.0.0"
   }
 }
