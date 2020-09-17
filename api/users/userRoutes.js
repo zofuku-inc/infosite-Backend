@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-const queries = require('./userQueries');
+const userModel = require('./userQueries');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const isAdmin = require('../../middlewares/restricted-middleware');
@@ -9,7 +9,7 @@ require('dotenv').config()
 //GET all users
 router.get('/', async (req,res) => {
     try {
-        const users = await queries.users.getAll()
+        const users = await userModel.getAllUsers()
         res.status(200).json(users)
     } catch (err){
         res.status(500).json(err.message)
@@ -24,14 +24,12 @@ router.post('/', async (req,res) => {
         userToPost.password = pwhashed
     }
     console.log('userToPost', userToPost)
-    queries
-        .users
-        .create(userToPost)
+    userModel
+        .addUser(userToPost)
         .then(response => {
             if (response){
-                queries
-                    .users
-                    .getById(response.id)
+                userModel
+                    .getUserById(response.id)
                     .then(newres => {
                         res.status(200).json(newres)
                     })
@@ -48,9 +46,8 @@ router.post('/', async (req,res) => {
 //POST a user - sign in
 router.post('/signin', (req,res) => {
     let {email, password} = req.body;
-    queries
-        .users
-        .findBy({email})
+    userModel
+        .findUserBy({email})
         .first()
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)){
@@ -82,9 +79,8 @@ router.post('/forgotpassword', (req,res) => {
     if (req.body.email === ''){
         res.status(400).json('email required')
     }
-    queries
-        .users
-        .findBy({email: req.body.email})
+    userModel
+        .findUserBy({email: req.body.email})
         .first()
         .then(user => {
             if (user === undefined){
@@ -92,9 +88,8 @@ router.post('/forgotpassword', (req,res) => {
             } else {
                 console.log('user', user)
                 const token = crypto.randomBytes(20).toString('hex')
-                queries
-                    .users
-                    .update(user.id, {
+                userModel
+                    .updateUser(user.id, {
                     resetPasswordToken: token,
                     // resetPasswordExpires: Date.now()*3600000
                     })
@@ -155,9 +150,8 @@ router.post('/forgotpassword', (req,res) => {
 router.get('/password/reset/:token', (req,res, next) => {
     const resetPasswordToken = req.params.token
     console.log('resetPasswordToken', resetPasswordToken)
-    queries
-        .users
-        .findBy({
+    userModel
+        .findUserBy({
             resetPasswordToken: resetPasswordToken,
             // resetPasswordExpires: {
             //     $gt: Date.now()
@@ -183,9 +177,8 @@ router.get('/password/reset/:token', (req,res, next) => {
 
 //UPDATE PASSWORD VIA EMAIL
 router.patch('/updatePasswordViaEmail', (req,res, next) => {
-    queries
-        .users
-        .findBy({
+    userModel
+        .findUserBy({
             email: req.body.email
         })
         .first()
@@ -193,9 +186,8 @@ router.patch('/updatePasswordViaEmail', (req,res, next) => {
             if (user !== null){
                 console.log('user exists in db');
                 const pwhashed = bcrypt.hashSync(req.body.password, 10)
-                queries
-                      .users
-                      .update(user.id, {
+                userModel
+                      .updateUser(user.id, {
                           password: pwhashed,
                           resetPasswordToken: null,
                           resetPasswordExpires: null
@@ -231,7 +223,7 @@ router.get('/signout', (req,res) => {
 router.get('/:userId/get', async (req,res) => {
     const userId = req.params.userId
     try {
-        const user = await queries.users.getById(userId)
+        const user = await userModel.getUserById(userId)
         res.status(200).json(user)
     } catch (err){
         res.status(500).json(err.message)
@@ -244,7 +236,7 @@ router.patch('/:userId/edit', async (req,res) => {
     const userId = req.params.userId
     const change = req.body
     try {
-        await queries.users.update(userId, change)
+        await userModel.updateUser(userId, change)
         res.status(200).json({message: 'updated 1 user'})
     } catch (err){
         res.status(500).json(err.message)
@@ -256,7 +248,7 @@ router.patch('/:userId/edit', async (req,res) => {
 router.delete('/:userId/delete', async (req,res) => {
     const userId = req.params.userId
     try {
-        await queries.users.delete(userId)
+        await userModel.deleteUser(userId)
         res.status(200).json({message: 'deleted 1 user'})
     } catch (err){
         res.status(500).json(err.message)
