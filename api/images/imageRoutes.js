@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const cloudinary = require('cloudinary');
 require('dotenv').config();
-const queries = require('./imageQueries')
+const imageModel = require('./imageQueries')
 
 const cloud_name = process.env.CLOUD_NAME
 const api_key = process.env.API_KEY
@@ -34,15 +34,13 @@ router.post('/forHouse/:houseId',  (req, res) => {
                     height: 300,
                     created_at: ""
                 }
-                queries
-                    .images
-                    .create(imageToPost)
+                imageModel
+                    .addImage(imageToPost)
                     .then(response => {
                         console.log('response in uploading image', response)
                         const imageId = response.id
-                        queries
-                            .images
-                            .createWithHouse({
+                        imageModel
+                            .addImageWithHouse({
                                                 image_id: imageId,
                                                 house_id: houseId
                                             })
@@ -68,16 +66,14 @@ router.post('/forHouse/:houseId',  (req, res) => {
                         height: results[i].height,
                         created_at: results[i].created_at
                     }
-                    queries
-                        .images
-                        .create(imageToPost)
+                    imageModel
+                        .addImage(imageToPost)
                         .then(response => {
                             console.log('response in uploading image', response)
                             const imageId = response.id
                             console.log('imageId', imageId)
-                            queries
-                                .images
-                                .createWithHouse({
+                            imageModel
+                                .addImageWithHouse({
                                                     image_id: imageId,
                                                     house_id: houseId
                                                 })
@@ -104,7 +100,7 @@ router.post('/forHouse/:houseId',  (req, res) => {
 //GET images
 router.get('/', async (req,res) => {
     try {
-        const images = await queries.images.getAll()
+        const images = await imageModel.getAllImages()
         res.status(200).json(images)
     } catch (err){
         res.status(500).json(err)
@@ -116,7 +112,7 @@ router.get('/', async (req,res) => {
 router.get('/forHouse/:house_id', async (req,res) => {
     const house_id = req.params.house_id
     try {
-        const images = await queries.images.getByHouseId(house_id)
+        const images = await imageModel.getImageByHouseId(house_id)
         res.status(200).json(images)
     } catch (err){
         res.status(500).json(err)

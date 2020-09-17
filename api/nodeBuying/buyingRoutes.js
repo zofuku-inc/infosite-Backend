@@ -1,11 +1,10 @@
 const router = require('express').Router()
-const queries = require('./buyingQueries');
-
+const nodeRequestModel = require('./buyingQueries');
 
 //GET all buying requests
 router.get('/', async (req,res) => {
     try {
-        const requests = await queries.buyingRequests.getAll()
+        const requests = await nodeRequestModel.getAllRequests()
         res.status(200).json(requests)
     } catch (err){
         console.log(err.response)
@@ -17,14 +16,12 @@ router.get('/', async (req,res) => {
 router.post('/fromBuyer/:buyer_id', async (req,res) => {
     const requestToPost = req.body
     const buyer_id = req.params.buyer_id
-    queries
-        .buyingRequests
-        .create(requestToPost)
+    nodeRequestModel
+        .addRequest(requestToPost)
         .then(response => {
             const request_id = response.id
-            queries
-                .buyingRequests
-                .createWithUser({
+            nodeRequestModel
+                .addRequestWithUser({
                                 user_id: buyer_id,
                                 node_request_id: request_id
                                 })
@@ -44,7 +41,7 @@ router.post('/fromBuyer/:buyer_id', async (req,res) => {
 router.get('/:requestId/get', async (req,res) => {
     const requestId = req.params.requestId
     try {
-        const request = await queries.buyingRequests. getByRequestId(requestId)
+        const request = await nodeRequestModel.getRequestById(requestId)
         res.status(200).json(request)
     } catch (err){
         res.status(500).json(err.message)
@@ -56,7 +53,7 @@ router.get('/:requestId/get', async (req,res) => {
 router.get('/fromBuyer/:buyer_id', async (req,res) => {
     const buyer_id = req.params.buyer_id
     try {
-        const requests = await queries.buyingRequests.getByUserId(buyer_id)
+        const requests = await nodeRequestModel.getRequestByUserId(buyer_id)
         res.status(200).json(requests)
     } catch (err){
         res.status(500).json(err)
@@ -68,7 +65,7 @@ router.get('/fromBuyer/:buyer_id', async (req,res) => {
 router.delete('/:requestId/delete', async (req,res) => {
     const requestId = req.params.requestId
     try {
-        await queries.buyingRequests.delete(requestId)
+        await nodeRequestModel.deleteRequest(requestId)
         res.status(200).json({message: 'deleted 1 request'})
     } catch (err){
         res.status(500).json(err.message)
@@ -81,12 +78,12 @@ router.patch('/:requestId/edit', async (req,res) => {
     const requestId = req.params.requestId
     const change = req.body
     try {
-        await queries.buyingRequests.update(requestId, change)
+        await nodeRequestModel.updateRequest(requestId, change)
         res.status(200).json({message: 'updated the request'})
     } catch (err){
         res.status(500).json(err.message)
     }
 })
 
-module.exports = router
+module.exports = router;
 
