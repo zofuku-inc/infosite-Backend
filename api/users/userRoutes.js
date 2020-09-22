@@ -134,7 +134,6 @@ router.post('/forgotpassword', (req,res) => {
                 transporter.sendMail(mailOptions, (err, response) => {
                     if (err){
                         console.error('there was an error:  ', err)
-                        res.status(500).json(err)
                     } else {
                         console.log('here is the res: ', response)
                         res.status(200).json('recovery email sent')
