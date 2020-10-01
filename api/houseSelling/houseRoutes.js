@@ -4,9 +4,9 @@ const isAdmin = require('../../middlewares/restricted-middleware')
 
 
 //GET all house selling requests
-router.get('/houses', async (req,res) => {
+router.get('/', async (req,res) => {
     try {
-        const requests = await housingModel.getAllRequests()
+        const requests = await housingModel.getAllHouses()
         res.status(200).json(requests)
     } catch (err){
         res.status(500).json(err.message)
@@ -15,14 +15,14 @@ router.get('/houses', async (req,res) => {
 
 //POST a house selling request
 router.post('/owner/:owner_id', (req,res) => {
-    const requestToPost = req.body
+    const houseToPost = req.body
     const owner_id = req.params.owner_id
     housingModel
-        .addRequest(requestToPost)
+        .addHouse(houseToPost)
         .then(response => {
             console.log('res1', response)
             const house_id = response.id
-            housingModel.createRequestWithUser({
+            housingModel.createHouseWithUser({
                                 user_id: owner_id,
                                 house_id: house_id
                             })
@@ -42,7 +42,7 @@ router.post('/owner/:owner_id', (req,res) => {
 router.get('/owner/:owner_id', async (req, res) => {
     const owner_id = req.params.owner_id
     try {
-        const houses = await housingModel.getRequestByOwnerId(owner_id)
+        const houses = await housingModel.getHouseByOwnerId(owner_id)
         res.status(200).json(houses)
     } catch (err){
         res.status(500).json(err)
@@ -50,10 +50,10 @@ router.get('/owner/:owner_id', async (req, res) => {
 })
 
 //GET a house by house id
-router.get('/getHouse/:house_id', async (req,res) => {
+router.get('/:house_id', async (req,res) => {
     const house_id = req.params.house_id
     try {
-        const house = await housingModel.getRequestById(house_id)
+        const house = await housingModel.getHouseById(house_id)
         res.status(200).json(house)
     } catch (err){
         res.status(500).json(err)
@@ -61,10 +61,10 @@ router.get('/getHouse/:house_id', async (req,res) => {
 })
 
 //GET a house selling request by id
-router.get('/:requestId/get', async (req,res) => {
-    const requestId = req.params.requestId
+router.get('/:houseId', async (req,res) => {
+    const houseId = req.params.houseId
     try {
-        const request = await housingModel.getRequestById(requestId)
+        const request = await housingModel.getHouseById(houseId)
         res.status(200).json(request)
     } catch (err){
         res.status(500).json(err.message)
@@ -72,11 +72,11 @@ router.get('/:requestId/get', async (req,res) => {
 })
 
 //UPDATE a house selling request
-router.patch('/:requestId/edit', isAdmin, async (req,res) => {
-    const requestId = req.params.requestId
+router.patch('/:houseId', isAdmin, async (req,res) => {
+    const houseId = req.params.houseId
     const change = req.body
     try {
-        await housingModel.updateRequest(requestId, change)
+        await housingModel.updateHouse(houseId, change)
         res.status(200).json({message: 'updated 1 house selling request'})
     } catch (err){
         res.status(500).json(err.message)
@@ -84,11 +84,11 @@ router.patch('/:requestId/edit', isAdmin, async (req,res) => {
 })
 
 //UPDATE number of nodes of a house
-router.patch('/:requestId/edit/user', async (req, res) => {
-    const requestId = req.params.requestId
+router.patch('/:houseId/user', async (req, res) => {
+    const houseId = req.params.houseId
     const change = req.body
     try {
-        await housingModel.updateRequest(requestId, change)
+        await housingModel.updateHouse(houseId, change)
         res.status(200).json({message: 'updated 1 house selling request'})
     } catch (err){
         res.status(500).json(err.message)
@@ -96,10 +96,10 @@ router.patch('/:requestId/edit/user', async (req, res) => {
 })
 
 //DELETE a house selling request
-router.delete('/:requestId/delete', async (req,res) => {
-    const requestId = req.params.requestId
+router.delete('/:houseId', async (req,res) => {
+    const houseId = req.params.houseId
     try {
-        await housingModel.deleteRequest(requestId)
+        await housingModel.deleteHouse(houseId)
         res.status(200).json({message: 'deleted 1 house selling request'})
     } catch (err){
         res.status(500).json(err.message)

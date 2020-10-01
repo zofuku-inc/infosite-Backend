@@ -1,7 +1,7 @@
 const db = require('../../database/dbConfig')
 
 
-const getAllRequests = () => {
+const getAllHouses = () => {
     return db("house_sell_request as h")
             .join("house_image as hi", "hi.house_id", "h.id")
             .join("image as i", "i.id", "hi.image_id")
@@ -9,12 +9,12 @@ const getAllRequests = () => {
 
 }
     
-const getRequestById = requestId => {
+const getHouseById = houseId => {
     return db("house_sell_request as h")
-            .where('h.id',requestId)
+            .where('h.id',houseId)
 }
 
-const getRequestByOwnerId =  ownerId => {
+const getHouseByOwnerId =  ownerId => {
     return db("user_sell_house as uh")
             .where({user_id: ownerId})
             .join("house_sell_request as hr", "hr.id", "uh.house_id")
@@ -23,40 +23,40 @@ const getRequestByOwnerId =  ownerId => {
             .join("user as u", "u.id", "uh.user_id")
 }
 
-const addRequest = request => {
+const addHouse = house => {
     return db("house_sell_request")
             .returning("id")
-            .insert(request)
+            .insert(house)
             .then(ids => ({id: ids[0]}))
 }
 
-const createRequestWithUser = userHouseIds => {
+const createHouseWithUser = userHouseIds => {
     return db("user_sell_house")
             .returning("id")
             .insert(userHouseIds)
             .then(ids => ({id: ids[0]}))
 }
 
-const updateRequest = (requestId, change) => {
+const updateHouse = (houseId, change) => {
     return db("house_sell_request as h")
-            .where({id: requestId})
+            .where({id: houseId})
             .update(change)
 }
 
-const deleteRequest = requestId => {
+const deleteHouse = houseId => {
     return db("house_sell_request")
-            .where({id: requestId})
+            .where({id: houseId})
             .del()
 }
 
 
 module.exports = {
-    getAllRequests,
-    getRequestById,
-    getRequestByOwnerId,
-    addRequest,
-    createRequestWithUser,
-    updateRequest,
-    deleteRequest
+    getAllHouses,
+    getHouseById,
+    getHouseByOwnerId,
+    addHouse,
+    createHouseWithUser,
+    updateHouse,
+    deleteHouse
 }
 

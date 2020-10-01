@@ -61,8 +61,8 @@ app.use(bodyParser.json());
 app.use(formData.parse());
 app.use(session(sessionConfig));
 app.use(cors(corsOptions));
-app.use('/buying', buyingRoutes);
-app.use('/sellingHouse', housingRoutes);
+app.use('/nodeRequests', buyingRoutes);
+app.use('/houses', housingRoutes);
 app.use('/users', userRoutes);
 app.use('/images', imageRoutes);
 
