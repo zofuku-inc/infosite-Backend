@@ -27,6 +27,9 @@ exports.up = function(knex) {
             table.float('income')
             table.float('cost')
             table.boolean('sold')
+            table.text('house_history')
+            table.text('why_spaceIncome')
+            table.text('future_plan')
         })
 };
 
