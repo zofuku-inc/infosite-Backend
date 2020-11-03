@@ -31,7 +31,7 @@ const sessionConfig = {
     cookie: {
         maxAge: 1000*60*60*2 ,
         secure: app.get('env') === 'production',
-        // sameSite: 'none',
+        sameSite: 'none',
         httpOnly: true
     },
     resave: false,
