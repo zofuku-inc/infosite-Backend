@@ -3,10 +3,21 @@ const housingModel = require('./houseQueries');
 const isAdmin = require('../../middlewares/restricted-middleware')
 
 
-//GET all house selling requests
-router.get('/', async (req,res) => {
+//GET all approved house selling requests
+router.get('/approved', async (req,res) => {
     try {
-        const requests = await housingModel.getAllHouses()
+        const requests = await housingModel.getApprovedHouses()
+        res.status(200).json(requests)
+    } catch (err){
+        res.status(500).json(err.message)
+    }
+})
+
+
+//GET all unapproved house selling requests
+router.get('/unapproved', async (req,res) => {
+    try {
+        const requests = await housingModel.getUnapprovedHouses()
         res.status(200).json(requests)
     } catch (err){
         res.status(500).json(err.message)

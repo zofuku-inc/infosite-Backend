@@ -1,12 +1,21 @@
 const db = require('../../database/dbConfig')
 
 
-const getAllHouses = () => {
+const getApprovedHouses = () => {
     return db("house_sell_request as h")
+            .where({isApproved: true})
             .join("house_image as hi", "hi.house_id", "h.id")
             .join("image as i", "i.id", "hi.image_id")
             .select("h.*", "i.image_url")
 
+}
+
+const getUnapprovedHouses = () => {
+    return db("house_sell_request as h")
+            .where({isApproved: false})
+            .join("house_image as hi", "hi.house_id", "h.id")
+            .join("image as i", "i.id", "hi.image_id")
+            .select("h.*", "i.image_url")
 }
     
 const getHouseById = houseId => {
@@ -51,7 +60,8 @@ const deleteHouse = houseId => {
 
 
 module.exports = {
-    getAllHouses,
+    getApprovedHouses,
+    getUnapprovedHouses,
     getHouseById,
     getHouseByOwnerId,
     addHouse,
